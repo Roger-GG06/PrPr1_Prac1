@@ -4,29 +4,27 @@ CFLAGS = -Wall -Wextra -std=c11 -O0 -g -Iinclude
 SRC_DIR = .
 BIN_DIR = bin
 
-SRCS = $(SRC_DIR)/main.c
+SRCS = $(SRC_DIR)/main.c \
+       $(SRC_DIR)/session.c
+
 OBJS = $(patsubst $(SRC_DIR)/%.c,$(BIN_DIR)/%.o,$(SRCS))
 
 TARGET = $(BIN_DIR)/program
 
-all: $(TARGET)
+all: $(BIN_DIR) $(TARGET)
 
-$(BIN_DIR)/%.o: $(SRC_DIR)/%.c
+$(BIN_DIR):
+	mkdir -p $(BIN_DIR)
+
+$(BIN_DIR)/%.o: $(SRC_DIR)/%.c | $(BIN_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(TARGET)
-
-test: $(BIN_DIR)/test.o $(filter-out $(BIN_DIR)/main.o,$(OBJS))
-	$(CC) $(CFLAGS) $(filter-out $(BIN_DIR)/main.o,$(OBJS)) $(BIN_DIR)/test.o -o $(BIN_DIR)/test_exec
-	./$(BIN_DIR)/test_exec
-
-$(BIN_DIR)/test.o: test.c
-	$(CC) $(CFLAGS) -c test.c -o $(BIN_DIR)/test.o
+	$(CC) $(CFLAGS) $(OBJS) -o $@
 
 clean:
-	rm -f $(BIN_DIR)/*.o $(TARGET)
-	rm -f $(BIN_DIR)/*.o
+	if exist $(BIN_DIR) del /Q $(BIN_DIR)\*.o $(TARGET).exe 2>nul
 
 run: all
-	./$(TARGET)
+	./$(TARGET).exe
+
