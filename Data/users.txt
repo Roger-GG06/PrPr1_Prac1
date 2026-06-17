@@ -1,0 +1,2 @@
+roger;contra;1234;MINION
+ga;ga;12;SUPERMINION

@@ -3,7 +3,9 @@
 #include <string.h>
 #include <ctype.h>
 
+#include "structs.h"
 #include "session.h"
+#include "utils.h"
 
 #define MAX_LENGTH 10
 
@@ -15,31 +17,16 @@ void printMenuPrincipal() {
     printf("Choose an option: ");
 }
 
-int leerInt() {
-    char input[MAX_LENGTH];
-    int i;
-
-    if (fgets(input, MAX_LENGTH, stdin) == NULL) {
-        return -1;
-    }
-
-    input[strcspn(input, "\n")] = '\0';
-
-    for (i = 0; input[i] != '\0'; i++) {
-        if (!isdigit(input[i])) {
-            return -1;
-        }
-    }
-
-    return atoi(input);
-}
 
 int main() {
     UserType loggedUser = NONE;
-    user users[MAX_USERS];
+    user *users = NULL;
     int numUsers;
     int opcio = 0;
+    users = malloc(MAX_USERS * sizeof(user));
 
+    loadUsers(users, &numUsers);
+    printf("%s", users[0].user);
     while (opcio != 3) {
         if(loggedUser == NONE){
             printMenuPrincipal();
@@ -55,7 +42,8 @@ int main() {
                     loggedUser = login(users, numUsers);
                     break;
                 case 2:
-                    printf("Register functionality coming soon...\n");
+                    loggedUser = registerUser(users, &numUsers);
+                    saveUsers(users, numUsers);
                     break;
                 case 3:
                     printf("GoodBye!\n");
@@ -68,18 +56,23 @@ int main() {
             switch (loggedUser){
                 case GRU:
                     printf("GRU coming soon...\n");
+                    loggedUser = NONE;
                     break;
                 case MINION:
                     printf("MINION coming soon...\n");
+                    loggedUser = NONE;
                     break;
                 case SUPERMINION:
                     printf("SUPERMINION coming soon...\n");
+                    loggedUser = NONE;
                     break;
                 case MINION_ENG:
                     printf("MINION_ENG coming soon...\n");
+                    loggedUser = NONE;
                     break;
                 default:
                     printf("Wrong Log\n");
+                    loggedUser = NONE;
                     break;
             }
         }
