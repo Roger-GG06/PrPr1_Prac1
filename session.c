@@ -210,13 +210,33 @@ UserType registerUser(user *users, int *numUsers){
     printf("\t4. MINION_ENG\n");
     printf("Choose an option (1-4): ");
     type = leerInt();
+    UserType selectedType;
+
+    switch(type) {
+    case 1:
+        selectedType = GRU;
+        break;
+    case 2:
+        selectedType = MINION;
+        break;
+    case 3:
+        selectedType = SUPERMINION;
+        break;
+    case 4:
+        selectedType = MINION_ENG;
+        break;
+    default:
+        printf("Invalid option. Defaulting to NONE.\n");
+        selectedType = NONE;
+        break;
+}
 
     strcpy(users[*numUsers].user, name);
     strcpy(users[*numUsers].password, password);
     users[*numUsers].pin = pin;
-    users[*numUsers].type = type;
+    users[*numUsers].type = selectedType;
 
     (*numUsers)++;
-    return type;
+    return selectedType;
 }
 
