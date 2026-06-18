@@ -240,6 +240,40 @@ void crearNovaTasca(task *tasques, int *numTasques, user *users, int numUsers){
     strcpy(newTask.hora, horari);    
     strcpy(newTask.nom, nomTask);
     newTask.pendent = PENDENT;
+    printf("\n%s\n", userTriat.user);
     strcpy(newTask.usuari, userTriat.user);
+
+    tasques[(*numTasques)] = newTask;
+    (*numTasques)++;
 }
  
+
+void saveTasques(task *tasques, int numTasques) {
+    FILE *fp = fopen(TASQUES_FILE, "w");
+    
+    if (fp == NULL) {
+        printf("\nERROR: cannot write tasques file\n");
+        return;
+    }
+    
+    for (int i = 0; i < numTasques; i++) {
+        const char *estatStr;
+        
+        switch (tasques[i].pendent) {
+            case PENDENT:   estatStr = "PENDENT"; break;
+            case EN_CURS:   estatStr = "EN_CURS"; break;
+            case ACABAT:    estatStr = "ACABAT"; break;
+            default:        estatStr = "PENDENT"; break;
+        }
+        
+        fprintf(fp, "%s;%s;%s;%s;%.1f;%s\n", 
+                estatStr,
+                tasques[i].nom,
+                tasques[i].usuari,
+                tasques[i].hora,
+                tasques[i].durada,
+                tasques[i].descripcio);
+    }
+    
+    fclose(fp);
+}

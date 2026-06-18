@@ -73,8 +73,8 @@ user retornarTypeDisponible(user *users, int numUsers, UserType type, int opcioE
 
     for(int i = 0; i < numUsers; i++){
         if(users[i].type == type){
+            numMinion++;
             if(numMinion == opcioEscollida){
-                numMinion++;
                 return users[i];
             }
         }

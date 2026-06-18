@@ -130,6 +130,7 @@ int main() {
                         break;
                     case 3:
                         crearNovaTasca(tasques, &numTasques, users, numUsers);
+                        saveTasques(tasques, numTasques);
                         break;
                     case 4:
                         printf("Opcio 4 (not implemented yet)\n");
