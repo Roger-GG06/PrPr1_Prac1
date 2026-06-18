@@ -7,8 +7,6 @@
 #include "session.h"
 #include "utils.h"
 
-#define MAX_LENGTH 10
-
 void printMenuPrincipal() {
     printf("Welcome to LS Minions Club :) What would you like to do today?\n");
     printf("\t1. Log in\n");
