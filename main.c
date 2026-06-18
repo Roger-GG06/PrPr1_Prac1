@@ -60,6 +60,7 @@ void printMenuMinion(UserType type){
 
 int main() {
     UserType loggedUser = NONE;
+    int userPosition = -1;
     user *users = NULL;
     eina *eines = NULL;
     task *tasques = NULL;
@@ -84,10 +85,12 @@ int main() {
 
             switch (opcio) {
                 case 1:
-                    loggedUser = login(users, numUsers);
+                    userPosition = login(users, numUsers);
+                    loggedUser = users[userPosition].type;
                     break;
                 case 2:
-                    loggedUser = registerUser(users, &numUsers);
+                    userPosition = registerUser(users, &numUsers);
+                    loggedUser = users[userPosition].type;
                     saveUsers(users, numUsers);
                     break;
                 case 3:
@@ -126,7 +129,7 @@ int main() {
                         mostrarTasquesPendents(tasques, numTasques);
                         break;
                     case 3:
-                        printf("Creacio de tasques (not implemented yet)\n");
+                        crearNovaTasca(tasques, &numTasques, users, numUsers);
                         break;
                     case 4:
                         printf("Opcio 4 (not implemented yet)\n");

@@ -123,3 +123,61 @@ void mostrarTasquesPendents(task *tasques, int numTasques) {
     }
     printf("------------------------------------------------------------------------------------------------------\n");
 }
+
+void crearNovaTasca(task *tasques, int *numTasques, user *users, int numUsers){
+    int tipusInput;
+    int usersAEscollir = 0, userEscollit = 0;
+    float duration = 0.0f;
+    char horari[MAX_STR], descripition[MAX_LENGTH], nomTask[MAX_STR];
+    UserType typeTask = NONE;
+    user userTriat = {0};
+    task newTask = {0};
+    
+    printf("What is the name of the task: ");
+    leerString(nomTask);
+
+    printf("Which type of task do you want to create:\n");
+    printf("\t1. Creation of parts\n");
+    printf("\t2. Ensallament d'eines\n");
+    printf("Option: ");
+
+    tipusInput = leerInt();
+
+    switch (tipusInput){
+        case 1:
+            typeTask = MINION;
+            break;
+        case 2:
+            typeTask = SUPERMINION;
+            break;
+        default:
+            printf("It has to be 1 or 2");
+            return;
+    }
+    usersAEscollir = mostrarTypeDisponible(users, numUsers, typeTask);
+    printf("\nWhich user are u assigning the new task? ");
+    userEscollit = leerInt();
+
+    if(userEscollit <=  0 || userEscollit > usersAEscollir){
+        printf("It has to be 1 - %d", usersAEscollir);
+        return;
+    }
+    userTriat = retornarTypeDisponible(users, numUsers, typeTask, userEscollit);
+
+    printf("Make a brief description: ");
+    leerString(descripition);
+
+    printf("Which schedule format -> (xx:xx) : ");
+    leerString(horari);
+
+    printf("How long does it take? ");
+    duration = leerFloat();
+
+    strcpy(newTask.descripcio, descripition);
+    newTask.durada = duration;
+    strcpy(newTask.hora, horari);    
+    strcpy(newTask.nom, nomTask);
+    newTask.pendent = PENDENT;
+    strcpy(newTask.usuari, userTriat.user);
+}
+ 

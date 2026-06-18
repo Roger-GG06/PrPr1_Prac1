@@ -139,7 +139,7 @@ int validatePin(user u, int pin) {
 
 
 
-UserType login(user *users, int numUsers) {
+int login(user *users, int numUsers) {
     char username[MAX_STR];
     char password[MAX_STR];
     char trash;
@@ -165,7 +165,7 @@ UserType login(user *users, int numUsers) {
     
     if (validatePassword(users[userIndex], password)) {
         printf("Login successful! Welcome %s.\n", users[userIndex].user);
-        return users[userIndex].type;
+        return userIndex;
     }
     
     printf("Incorrect password. Enter PIN: ");
@@ -174,14 +174,14 @@ UserType login(user *users, int numUsers) {
     
     if (validatePin(users[userIndex], pin)) {
         printf("PIN correct. Login successful! Welcome %s.\n", users[userIndex].user);
-        return users[userIndex].type;
+        return userIndex;
     }
     
     printf("Incorrect PIN. Access denied.\n");
-    return NONE;
+    return -1;
 }
 
-UserType registerUser(user *users, int *numUsers){
+int registerUser(user *users, int *numUsers){
     char name[MAX_STR];
     char password[MAX_STR];
     int pin = 0, type = 0; 
@@ -191,7 +191,7 @@ UserType registerUser(user *users, int *numUsers){
     leerString(name);
     if(findUserByUsername(users, *numUsers, name) != -1){
         printf("Username already in use\n");
-        return NONE;
+        return -1;
     }
 
     printf("Password: ");
@@ -201,7 +201,7 @@ UserType registerUser(user *users, int *numUsers){
     pin = leerInt();
     if(pin == -1){
         printf("It must be a number\n");
-        return NONE;
+        return -1;
     }
 
     printf("\nSelect User Type:\n");
@@ -237,7 +237,8 @@ UserType registerUser(user *users, int *numUsers){
     users[*numUsers].pin = pin;
     users[*numUsers].type = selectedType;
 
+    int posicioRetornar = *numUsers;
     (*numUsers)++;
-    return selectedType;
+    return posicioRetornar;
 }
 

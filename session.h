@@ -12,8 +12,8 @@ int findUserByUsername(user *users, int numUsers, char username[MAX_STR]);
 int validatePassword(user u, char password[MAX_STR]);
 int validatePin(user u, int pin);
 
-UserType login(user *users, int numUsers);
-UserType registerUser(user *users, int *numUsers);
+int login(user *users, int numUsers);
+int registerUser(user *users, int *numUsers);
 
 
 #endif
