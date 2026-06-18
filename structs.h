@@ -4,6 +4,8 @@
 #define MAX_STR 100
 #define MAX_LENGTH 1000
 #define MAX_USERS 250
+#define MAX_EINES 1000
+#define MAX_TASKS 1000
 #define USERS_FILE "Data\\users.txt"
 #define EINES_FILE "Data\\eines.txt"
 

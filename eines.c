@@ -7,7 +7,7 @@
 
 void loadEines(eina *eines, int *numEines) {
     FILE *fp = fopen(EINES_FILE, "r");
-    char line[MAX_STR * 4];
+    char line[MAX_LENGTH * 2];
     
     *numEines = 0;
     
@@ -17,7 +17,10 @@ void loadEines(eina *eines, int *numEines) {
     }
     
     while (fgets(line, sizeof(line), fp) != NULL) {
-        line[strlen(line) - 1] = '\0';
+        size_t len = strlen(line);
+        if (len > 0 && line[len - 1] == '\n') {
+            line[len - 1] = '\0';
+        }
         
         char nomTemp[MAX_STR], typeTemp[MAX_STR], descripcioTemp[MAX_STR];
         char quantityTemp[MAX_STR], creacioTemp[MAX_STR];
@@ -44,13 +47,17 @@ void loadEines(eina *eines, int *numEines) {
             }
         }
         
+        printf("%s, %s, %s, %s, %s, %d\n", nomTemp, typeTemp, descripcioTemp, quantityTemp, creacioTemp, *numEines);
+        if (camp == 4)creacioTemp[j] = '\0';
 
-        if (camp == 4) creacioTemp[j] = '\0';
-        
         strcpy(eines[*numEines].nom, nomTemp);
+        printf("hola\n");
         strcpy(eines[*numEines].type, typeTemp);
+        printf("hola2\n");
         strcpy(eines[*numEines].descripcio, descripcioTemp);
+        printf("hola3\n");
         eines[*numEines].quantity = atoi(quantityTemp);
+        printf("hola4\n");
         
 
         if (strcmp(creacioTemp, "PENDENT") == 0) {
@@ -62,9 +69,52 @@ void loadEines(eina *eines, int *numEines) {
         } else {
             eines[*numEines].creacio = PENDENT;
         }
+        printf("hola5\n");
         
         (*numEines)++;
+        printf("hola6\n");
     }
     
     fclose(fp);
 }   
+
+void mostrarEinesACrear(eina *eines, int numEines) {
+    int einesMostrades = 0;
+    if (numEines == 0) {
+        printf("\nNo hi ha eines disponibles.\n");
+        return;
+    }
+    
+    printf("\n\t\t=== LLISTAT D'EINES A FABRICAR ===\n");
+    printf("---------------------------------------------------------------------\n");
+    printf("Nom\t\t\t | Tipus\t\t| Quantitat | Estat\n");
+    printf("---------------------------------------------------------------------\n");
+    
+    for (int i = 0; i < numEines; i++) {
+        char estatStr[MAX_STR];
+        int mostrar = 1;
+        switch (eines[i].creacio) {
+            case PENDENT:   
+                strcpy(estatStr, "PENDENT"); 
+                break;
+            case EN_CURS:  
+                strcpy(estatStr, "EN CURS"); 
+                break;
+            case ACABAT:      
+                mostrar = 0;
+                break;
+            default:
+                strcpy(estatStr, "DESCONEGUT");           
+                break;
+        }
+        if(mostrar){
+            printf("%-24s | %-20s | %-9d | %s\n", eines[i].nom, eines[i].type, eines[i].quantity, estatStr);
+            einesMostrades++;
+        }  
+
+    }
+    if(einesMostrades == 0){
+        printf("Totes les eines estan acabades.\n");
+    }
+    printf("---------------------------------------------------------------------\n");
+}

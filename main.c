@@ -3,9 +3,10 @@
 #include <string.h>
 #include <ctype.h>
 
+#include "utils.h"
 #include "structs.h"
 #include "session.h"
-#include "utils.h"
+#include "eines.h"
 
 void printMenuPrincipal() {
     printf("Welcome to LS Minions Club :) What would you like to do today?\n");
@@ -59,9 +60,12 @@ void printMenuMinion(UserType type){
 int main() {
     UserType loggedUser = NONE;
     user *users = NULL;
-    int numUsers;
+    eina *eines = NULL;
+
+    int numUsers, numEines;
     int opcio = 0, opcioLogged = -1;
     users = malloc(MAX_USERS * sizeof(user));
+    eines = malloc(MAX_EINES * sizeof(eina));
 
     loadUsers(users, &numUsers);
     printf("%s", users[0].user);
@@ -92,6 +96,7 @@ int main() {
             }
         } else {
             opcioLogged = -1;
+            loadEines(eines, &numEines);
             while(opcioLogged != 0){
                 printMenuMinion(loggedUser);
                 printf("\n\nOption to choose: ");
@@ -110,7 +115,7 @@ int main() {
                         loggedUser = NONE;
                         break;
                     case 1:
-                        printf("Llistar eines (not implemented yet)\n");
+                        mostrarEinesACrear(eines, numEines);
                         break;
                     case 2:
                         printf("Llistar tasques (not implemented yet)\n");
