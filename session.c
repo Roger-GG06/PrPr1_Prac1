@@ -7,7 +7,7 @@
 
 void loadUsers(user *users, int *userCount) {
     FILE *fp = fopen(USERS_FILE, "r");
-    char line[MAX_STR];
+    char line[MAX_STR * 4];
 
     *userCount = 0;
     
@@ -19,7 +19,7 @@ void loadUsers(user *users, int *userCount) {
     while (fgets(line, sizeof(line), fp) != NULL) {
         line[strlen(line)-1] = '\0';
         
-        char userTemp[50], passTemp[50], pinTemp[50], typeTemp[50];
+        char userTemp[MAX_STR], passTemp[MAX_STR], pinTemp[MAX_STR], typeTemp[MAX_STR];
         int i = 0, j = 0;
         int camp = 0;
         for (i = 0; line[i] != '\0'; i++) {

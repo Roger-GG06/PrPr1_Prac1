@@ -7,6 +7,7 @@
 #include "structs.h"
 #include "session.h"
 #include "eines.h"
+#include "tasques.h"
 
 void printMenuPrincipal() {
     printf("Welcome to LS Minions Club :) What would you like to do today?\n");
@@ -61,11 +62,13 @@ int main() {
     UserType loggedUser = NONE;
     user *users = NULL;
     eina *eines = NULL;
+    task *tasques = NULL;
 
-    int numUsers, numEines;
+    int numUsers, numEines, numTasques;
     int opcio = 0, opcioLogged = -1;
     users = malloc(MAX_USERS * sizeof(user));
     eines = malloc(MAX_EINES * sizeof(eina));
+    tasques = malloc(MAX_TASKS * sizeof(task));
 
     loadUsers(users, &numUsers);
     printf("%s", users[0].user);
@@ -97,6 +100,8 @@ int main() {
         } else {
             opcioLogged = -1;
             loadEines(eines, &numEines);
+            loadTasques(tasques, &numTasques);
+
             while(opcioLogged != 0){
                 printMenuMinion(loggedUser);
                 printf("\n\nOption to choose: ");

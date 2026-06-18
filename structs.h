@@ -6,8 +6,10 @@
 #define MAX_USERS 250
 #define MAX_EINES 1000
 #define MAX_TASKS 1000
+
 #define USERS_FILE "Data\\users.txt"
 #define EINES_FILE "Data\\eines.txt"
+#define TASQUES_FILE "Data\\tasques.txt"
 
 typedef enum{
     GRU,

@@ -7,7 +7,8 @@ BIN_DIR = bin
 SRCS = $(SRC_DIR)/main.c \
        $(SRC_DIR)/session.c \
        $(SRC_DIR)/utils.c \
-       $(SRC_DIR)/eines.c
+       $(SRC_DIR)/eines.c \
+       $(SRC_DIR)/tasques.c
 
 OBJS = $(patsubst $(SRC_DIR)/%.c,$(BIN_DIR)/%.o,$(SRCS))
 
