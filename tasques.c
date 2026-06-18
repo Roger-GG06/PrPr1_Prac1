@@ -5,6 +5,58 @@
 
 #include "tasques.h"
 
+int parseTimeToInt(char horari[MAX_STR]){
+    int resultat = 0;
+    int multiplicador = 600;
+    int size = strlen(horari);
+    for(int i = 0; i < size; i++){
+        if(horari[i] == ':'){
+            multiplicador = 10;
+        } else if (horari[i] >= '0' && horari[i] <= '9'){
+            resultat = (horari[i] - '0') * multiplicador;
+            multiplicador = multiplicador / 10;
+        }
+    }
+
+    return resultat;
+}
+
+int comprovarHorari(char hora[MAX_STR]) {
+    int hores, minuts;
+    char separador;
+    
+    if (sscanf(hora, "%d%c%d", &hores, &separador, &minuts) == 3) {
+        if (separador == ':') {
+            if (hores >= 0 && hores <= 23 && minuts >= 0 && minuts <= 59) {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
+int comprovarHorariUsuari(int durada,char hora[MAX_STR], char novaHora[MAX_STR]){
+    int horaMin = parseTimeToInt(hora);
+    int novaHoraMin = parseTimeToInt(novaHora);
+
+    if(novaHoraMin >= horaMin && novaHoraMin <= horaMin + durada){
+        return 0;
+    } 
+
+    return 1;
+}
+
+int comprovatTotesTasquesHorari(task *tasques, int numTasques, char name[MAX_STR], char novaHora[MAX_STR]){
+    for(int i = 0; i < numTasques; i++){
+        if(strcmp(name, tasques[i].usuari) == 0){
+            if(!comprovarHorariUsuari(tasques[i].durada, tasques[i].hora, novaHora)){
+                return 0;
+            }
+        }
+    }
+    return 1;
+}
+
 void loadTasques(task *tasques, int *numTasques) {
     FILE *fp = fopen(TASQUES_FILE, "r");
     char line[MAX_LENGTH * 2];
@@ -169,6 +221,16 @@ void crearNovaTasca(task *tasques, int *numTasques, user *users, int numUsers){
 
     printf("Which schedule format -> (xx:xx) : ");
     leerString(horari);
+
+    if(!comprovarHorari(horari)){
+        printf("It has to be this format -> (xx:xx)");
+        return;
+    }
+
+    if(!comprovatTotesTasquesHorari(tasques, *numTasques, userTriat.user, horari)){
+        printf("This user it already has a task in this schedule");
+        return;
+    }
 
     printf("How long does it take? ");
     duration = leerFloat();

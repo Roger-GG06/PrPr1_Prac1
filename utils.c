@@ -71,7 +71,6 @@ user retornarTypeDisponible(user *users, int numUsers, UserType type, int opcioE
     int numMinion = 0;
     user usuariNull = {0};
 
-    printf("\nMinions Disponibles:\n");
     for(int i = 0; i < numUsers; i++){
         if(users[i].type == type){
             if(numMinion == opcioEscollida){
