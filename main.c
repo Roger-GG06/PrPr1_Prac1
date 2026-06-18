@@ -64,7 +64,7 @@ int main() {
     eina *eines = NULL;
     task *tasques = NULL;
 
-    int numUsers, numEines, numTasques;
+    int numUsers = 0, numEines = 0, numTasques = 0;
     int opcio = 0, opcioLogged = -1;
     users = malloc(MAX_USERS * sizeof(user));
     eines = malloc(MAX_EINES * sizeof(eina));
@@ -123,7 +123,7 @@ int main() {
                         mostrarEinesACrear(eines, numEines);
                         break;
                     case 2:
-                        printf("Llistar tasques (not implemented yet)\n");
+                        mostrarTasquesPendents(tasques, numTasques);
                         break;
                     case 3:
                         printf("Creacio de tasques (not implemented yet)\n");

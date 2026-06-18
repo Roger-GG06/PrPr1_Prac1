@@ -73,3 +73,53 @@ void loadTasques(task *tasques, int *numTasques) {
     
     fclose(fp);
 }
+
+void mostrarTasquesPendents(task *tasques, int numTasques) {
+    int tasquesMostrades = 0;
+    
+    if (numTasques == 0) {
+        printf("\nNo hi ha tasques disponibles.\n");
+        return;
+    }
+    
+    printf("\n\t\t=== LLISTAT DE TASQUES PENDENTS ===\n");
+    printf("------------------------------------------------------------------------------------------------------\n");
+    printf("Estat\t\t | Nom\t\t\t\t | Usuari\t\t | Hora\t | Durada | Descripcio\n");
+    printf("------------------------------------------------------------------------------------------------------\n");
+    
+    for (int i = 0; i < numTasques; i++) {
+        char estatStr[MAX_STR];
+        int mostrar = 1;
+        
+        switch (tasques[i].pendent) {
+            case PENDENT:
+                strcpy(estatStr, "PENDENT");
+                break;
+            case EN_CURS:
+                strcpy(estatStr, "EN CURS");
+                break;
+            case ACABAT:
+                mostrar = 0;
+                break;
+            default:
+                strcpy(estatStr, "DESCONEGUT");
+                break;
+        }
+        
+        if (mostrar) {
+            printf("%-15s | %-30s | %-20s | %-5s | %-7.1f | %s\n", 
+                   estatStr, 
+                   tasques[i].nom, 
+                   tasques[i].usuari, 
+                   tasques[i].hora, 
+                   tasques[i].durada, 
+                   tasques[i].descripcio);
+            tasquesMostrades++;
+        }
+    }
+    
+    if (tasquesMostrades == 0) {
+        printf("Totes les tasques estan acabades.\n");
+    }
+    printf("------------------------------------------------------------------------------------------------------\n");
+}

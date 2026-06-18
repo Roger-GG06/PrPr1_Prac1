@@ -1,0 +1,104 @@
+PENDENT;Construir martell;Kevin;08:00;2.5;Martell de guerra per a la missio
+EN_CURS;Dissenyar escut;Stuart;09:30;1.0;Escut de proteccio super secret
+PENDENT;Ensellar pistola;Bob;10:00;3.0;Pistola de rajos congeladors
+ACABAT;Crear claus angles;Kevin;14:00;1.5;Joc de claus angles metriques
+PENDENT;Fabricar serra;Minion1;11:00;2.0;Serra manual per a fusta
+PENDENT;Muntar trepa;Minion2;12:00;1.5;Trepa electrica de 500W
+PENDENT;Construir alicates;Kevin;13:00;2.0;Alicates universals
+EN_CURS;Dissenyar llima;Stuart;14:30;1.0;Llima de metall per a desbastar
+PENDENT;Fabricar rasqueta;Minion3;15:00;1.5;Rasqueta per a pintura
+PENDENT;Muntar cinta metrica;Minion4;16:00;1.0;Cinta metrica de 5 metres
+PENDENT;Construir nivell;Kevin;17:00;2.0;Nivell de bombolla d'aire
+PENDENT;Dissenyar escaire;Stuart;08:30;1.5;Escaire de metall per a angles
+PENDENT;Fabricar compas;Minion5;09:00;1.0;Compas de precisio per a dibuix
+PENDENT;Muntar regle;Minion6;10:30;0.5;Regle de 50 centimetres
+PENDENT;Construir pistola de cola;Kevin;11:30;2.0;Pistola de cola calenta
+PENDENT;Dissenyar cutell;Stuart;12:30;1.0;Cutell multiusos
+PENDENT;Fabricar tisores;Minion7;13:30;1.5;Tisores de metall
+PENDENT;Muntar pinces;Minion8;14:00;1.0;Pinces de precisio
+PENDENT;Construir martell de goma;Kevin;15:30;2.0;Martell de goma per a superficies
+PENDENT;Dissenyar tornavis electric;Stuart;16:30;1.5;Tornavis electric recarregable
+PENDENT;Fabricar serra circular;Minion9;17:00;2.5;Serra circular de 1500W
+PENDENT;Muntar trepa de percussio;Minion10;08:00;1.5;Trepa de percussio amb SDS
+PENDENT;Construir raspador;Kevin;09:00;1.0;Raspador de metall
+PENDENT;Dissenyar polimentadora;Stuart;10:00;2.0;Polimentadora electrica
+PENDENT;Fabricar soldador;Minion11;11:00;1.5;Soldador d'estany de 60W
+PENDENT;Muntar desoldador;Minion12;12:00;1.0;Desoldador de buit
+PENDENT;Construir multimetre;Kevin;13:00;2.0;Multimetre digital
+PENDENT;Dissenyar oscil·loscopi;Stuart;14:00;2.5;Oscil·loscopi de 100MHz
+PENDENT;Fabricar generador de senyals;Minion13;15:00;1.5;Generador de senyals
+PENDENT;Muntar font d'alimentacio;Minion14;16:00;1.0;Font d'alimentacio regulable
+PENDENT;Construir carregador de bateries;Kevin;17:00;1.5;Carregador de bateries
+PENDENT;Dissenyar bateria recarregable;Stuart;08:30;1.0;Bateria recarregable
+PENDENT;Fabricar cable USB;Minion15;09:30;0.5;Cable USB de dades
+PENDENT;Muntar convertidor;Minion16;10:00;1.5;Convertidor de corrent
+PENDENT;Construir inversor;Kevin;11:00;2.0;Inversor de tensio
+PENDENT;Dissenyar rele;Stuart;12:00;1.0;Rele de 12V
+PENDENT;Fabricar interruptor;Minion17;13:00;1.5;Interruptor de paret
+PENDENT;Muntar endoll;Minion18;14:00;0.5;Endoll electric
+PENDENT;Construir llum LED;Kevin;15:00;1.0;Llum LED de 10W
+PENDENT;Dissenyar transformador;Stuart;16:00;2.0;Transformador de 220V
+PENDENT;Fabricar motor electric;Minion19;17:00;2.5;Motor electric de 100W
+PENDENT;Muntar ventilador;Minion20;08:00;1.5;Ventilador de taula
+PENDENT;Construir radiador;Kevin;09:00;2.0;Radiador electric
+PENDENT;Dissenyar calefactor;Stuart;10:00;1.5;Calefactor de gas
+PENDENT;Fabricar termostat;Minion21;11:00;1.0;Termostat digital
+PENDENT;Muntar sensor de temperatura;Minion22;12:00;1.5;Sensor de temperatura
+PENDENT;Construir sensor de pressio;Kevin;13:00;1.0;Sensor de pressio
+PENDENT;Dissenyar sensor de moviment;Stuart;14:00;1.5;Sensor de moviment
+PENDENT;Fabricar camera de seguretat;Minion23;15:00;2.0;Camera de seguretat
+PENDENT;Muntar gravadora;Minion24;16:00;1.5;Gravadora de video
+PENDENT;Construir reproductor DVD;Kevin;17:00;1.0;Reproductor DVD
+PENDENT;Dissenyar altaveu;Stuart;08:30;1.5;Altaveu Bluetooth
+PENDENT;Fabricar microfon;Minion25;09:30;1.0;Microfon de condensador
+PENDENT;Muntar auriculars;Minion26;10:00;1.5;Auriculars sense fils
+PENDENT;Construir pantalla LCD;Kevin;11:00;2.0;Pantalla LCD 15 polzades
+PENDENT;Dissenyar monitor;Stuart;12:00;1.5;Monitor de 24 polzades
+PENDENT;Fabricar teclat;Minion27;13:00;1.0;Teclat mecanic
+PENDENT;Muntar ratoli;Minion28;14:00;0.5;Ratoli optic
+PENDENT;Construir impressora;Kevin;15:00;2.0;Impressora laser
+PENDENT;Dissenyar scanner;Stuart;16:00;1.5;Scanner de documents
+PENDENT;Fabricar fotocopiadora;Minion29;17:00;2.0;Fotocopiadora digital
+PENDENT;Muntar fax;Minion30;08:00;1.0;Fax tradicional
+PENDENT;Construir telefon;Kevin;09:00;1.5;Telefon sense fil
+PENDENT;Dissenyar mobil;Stuart;10:00;1.5;Telefon intel·ligent
+PENDENT;Fabricar tablet;Minion31;11:00;1.0;Tablet tactil
+PENDENT;Muntar ordinador portatil;Minion32;12:00;2.0;Ordinador portatil
+PENDENT;Construir ordinador sobretaula;Kevin;13:00;2.5;Ordinador de sobretaula
+PENDENT;Dissenyar servidor;Stuart;14:00;3.0;Servidor de dades
+PENDENT;Fabricar router;Minion33;15:00;1.5;Router WiFi
+PENDENT;Muntar switch;Minion34;16:00;1.0;Switch de xarxa
+PENDENT;Construir hub;Kevin;17:00;1.0;Hub USB
+PENDENT;Dissenyar adaptador;Stuart;08:30;1.5;Adaptador de corrent
+PENDENT;Fabricar carregador USB;Minion35;09:30;1.0;Carregador USB
+PENDENT;Muntar bateria externa;Minion36;10:00;1.5;Bateria externa portatil
+PENDENT;Construir disc dur extern;Kevin;11:00;1.5;Disc dur extern 1TB
+PENDENT;Dissenyar memoria USB;Stuart;12:00;1.0;Memoria USB 64GB
+PENDENT;Fabricar targeta SD;Minion37;13:00;0.5;Targeta SD 128GB
+PENDENT;Muntar lector de targetes;Minion38;14:00;1.0;Lector de targetes
+PENDENT;Construir camera fotografica;Kevin;15:00;2.0;Camera fotografica
+PENDENT;Dissenyar videocamera;Stuart;16:00;2.0;Videocamera 4K
+PENDENT;Fabricar tripode;Minion39;17:00;1.0;Tripode per a camera
+PENDENT;Muntar filtre de llum;Minion40;08:00;1.0;Filtre de llum
+PENDENT;Construir objectiu;Kevin;09:00;1.5;Objectiu gran angular
+PENDENT;Dissenyar flash;Stuart;10:00;1.0;Flash extern
+PENDENT;Fabricar antena;Minion41;11:00;1.5;Antena de televisio
+PENDENT;Muntar receptor;Minion42;12:00;1.5;Receptor de senyal
+PENDENT;Construir transmissor;Kevin;13:00;1.5;Transmissor FM
+PENDENT;Dissenyar modulador;Stuart;14:00;1.0;Modulador de senyal
+PENDENT;Fabricar demodulador;Minion43;15:00;1.0;Demodulador de senyal
+PENDENT;Muntar amplificador;Minion44;16:00;2.0;Amplificador d'audio
+PENDENT;Construir equalitzador;Kevin;17:00;1.5;Equalitzador de so
+PENDENT;Dissenyar mesclador;Stuart;08:30;1.0;Mesclador d'audio
+PENDENT;Fabricar sintetitzador;Minion45;09:30;2.0;Sintetitzador de so
+PENDENT;Muntar maquina de cosir;Minion46;10:00;2.0;Maquina de cosir electrica
+PENDENT;Construir planxa;Kevin;11:00;1.5;Planxa de vapor
+PENDENT;Dissenyar aspirador;Stuart;12:00;2.0;Aspirador de pols
+PENDENT;Fabricar robot aspirador;Minion47;13:00;2.5;Robot aspirador automatic
+PENDENT;Muntar fregadora;Minion48;14:00;1.5;Fregadora electrica
+PENDENT;Construir lavadora;Kevin;15:00;2.5;Lavadora automatica
+PENDENT;Dissenyar secadora;Stuart;16:00;1.5;Secadora de roba
+PENDENT;Fabricar forn;Minion49;17:00;2.0;Forn electric
+PENDENT;Muntar microones;Minion50;08:00;1.5;Microones
+PENDENT;Construir cafetera;Kevin;09:00;1.5;Cafetera electrica
+PENDENT;Dissenyar batedora;Stuart;10:00;1.0;Batedora de cuina

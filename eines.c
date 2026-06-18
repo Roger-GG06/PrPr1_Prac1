@@ -47,17 +47,12 @@ void loadEines(eina *eines, int *numEines) {
             }
         }
         
-        printf("%s, %s, %s, %s, %s, %d\n", nomTemp, typeTemp, descripcioTemp, quantityTemp, creacioTemp, *numEines);
         if (camp == 4)creacioTemp[j] = '\0';
 
         strcpy(eines[*numEines].nom, nomTemp);
-        printf("hola\n");
         strcpy(eines[*numEines].type, typeTemp);
-        printf("hola2\n");
         strcpy(eines[*numEines].descripcio, descripcioTemp);
-        printf("hola3\n");
         eines[*numEines].quantity = atoi(quantityTemp);
-        printf("hola4\n");
         
 
         if (strcmp(creacioTemp, "PENDENT") == 0) {
@@ -69,10 +64,8 @@ void loadEines(eina *eines, int *numEines) {
         } else {
             eines[*numEines].creacio = PENDENT;
         }
-        printf("hola5\n");
         
         (*numEines)++;
-        printf("hola6\n");
     }
     
     fclose(fp);
