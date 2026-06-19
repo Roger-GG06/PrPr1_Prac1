@@ -2,11 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+
 #include "session.h"
 
 void loadUsers(user *users, int *userCount) {
     FILE *fp = fopen(USERS_FILE, "r");
-    char line[MAX_STR];
+    char line[MAX_STR * 4];
 
     *userCount = 0;
     
@@ -18,7 +19,7 @@ void loadUsers(user *users, int *userCount) {
     while (fgets(line, sizeof(line), fp) != NULL) {
         line[strlen(line)-1] = '\0';
         
-        char userTemp[50], passTemp[50], pinTemp[50], typeTemp[50];
+        char userTemp[MAX_STR], passTemp[MAX_STR], pinTemp[MAX_STR], typeTemp[MAX_STR];
         int i = 0, j = 0;
         int camp = 0;
         for (i = 0; line[i] != '\0'; i++) {
@@ -138,7 +139,7 @@ int validatePin(user u, int pin) {
 
 
 
-UserType login(user *users, int numUsers) {
+int login(user *users, int numUsers) {
     char username[MAX_STR];
     char password[MAX_STR];
     char trash;
@@ -164,7 +165,7 @@ UserType login(user *users, int numUsers) {
     
     if (validatePassword(users[userIndex], password)) {
         printf("Login successful! Welcome %s.\n", users[userIndex].user);
-        return users[userIndex].type;
+        return userIndex;
     }
     
     printf("Incorrect password. Enter PIN: ");
@@ -173,14 +174,14 @@ UserType login(user *users, int numUsers) {
     
     if (validatePin(users[userIndex], pin)) {
         printf("PIN correct. Login successful! Welcome %s.\n", users[userIndex].user);
-        return users[userIndex].type;
+        return userIndex;
     }
     
     printf("Incorrect PIN. Access denied.\n");
-    return NONE;
+    return -1;
 }
 
-UserType registerUser(user *users, int *numUsers){
+int registerUser(user *users, int *numUsers){
     char name[MAX_STR];
     char password[MAX_STR];
     int pin = 0, type = 0; 
@@ -190,7 +191,7 @@ UserType registerUser(user *users, int *numUsers){
     leerString(name);
     if(findUserByUsername(users, *numUsers, name) != -1){
         printf("Username already in use\n");
-        return NONE;
+        return -1;
     }
 
     printf("Password: ");
@@ -200,7 +201,7 @@ UserType registerUser(user *users, int *numUsers){
     pin = leerInt();
     if(pin == -1){
         printf("It must be a number\n");
-        return NONE;
+        return -1;
     }
 
     printf("\nSelect User Type:\n");
@@ -210,13 +211,34 @@ UserType registerUser(user *users, int *numUsers){
     printf("\t4. MINION_ENG\n");
     printf("Choose an option (1-4): ");
     type = leerInt();
+    UserType selectedType;
+
+    switch(type) {
+    case 1:
+        selectedType = GRU;
+        break;
+    case 2:
+        selectedType = MINION;
+        break;
+    case 3:
+        selectedType = SUPERMINION;
+        break;
+    case 4:
+        selectedType = MINION_ENG;
+        break;
+    default:
+        printf("Invalid option. Defaulting to NONE.\n");
+        selectedType = NONE;
+        break;
+}
 
     strcpy(users[*numUsers].user, name);
     strcpy(users[*numUsers].password, password);
     users[*numUsers].pin = pin;
-    users[*numUsers].type = type;
+    users[*numUsers].type = selectedType;
 
+    int posicioRetornar = *numUsers;
     (*numUsers)++;
-    return type;
+    return posicioRetornar;
 }
 

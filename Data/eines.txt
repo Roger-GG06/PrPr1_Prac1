@@ -1,0 +1,104 @@
+Martell;Manual;Martell de ferro per a clavar;5;ACABAT
+Tornavis;Manual;Tornavis de punta plana;3;ACABAT
+Serra;Manual;Serra manual per a fusta;0;PENDENT
+Claus angles;Manual;Joc de claus angles metriques;4;ACABAT
+Alicates;Manual;Alicates universals;2;EN_CURS
+Llima;Manual;Llima de metall per a desbastar;6;ACABAT
+Trepa;Electrica;Trepa electrica de 500W;1;PENDENT
+Serra de calar;Electrica;Serra de calar per a tall corbes;0;PENDENT
+Rasqueta;Manual;Rasqueta per a pintura;3;ACABAT
+Cinta metrica;Mesura;Cinta metrica de 5 metres;2;EN_CURS
+Nivell;Mesura;Nivell de bombolla d'aire;8;ACABAT
+Escaire;Mesura;Escaire de metall per a angles;4;ACABAT
+Compas;Mesura;Compas de precisio per a dibuix;3;PENDENT
+Regle;Mesura;Regle de 50 centimetres;1;EN_CURS
+Pistola de cola;Electrica;Pistola de cola calenta;5;ACABAT
+Cutell;Manual;Cutell multiusos;2;ACABAT
+Tisores;Manual;Tisores de metall;6;PENDENT
+Pinces;Manual;Pinces de precisio;4;EN_CURS
+Martell de goma;Manual;Martell de goma per a superficies;3;ACABAT
+Tornavis electric;Electric;Tornavis electric recarregable;7;ACABAT
+Serra circular;Electrica;Serra circular de 1500W;2;PENDENT
+Trepa de percussio;Electrica;Trepa de percussio amb SDS;1;EN_CURS
+Raspador;Manual;Raspador de metall;0;PENDENT
+Polimentadora;Electrica;Polimentadora electrica;3;ACABAT
+Soldador;Electric;Soldador d'estany de 60W;2;ACABAT
+Desoldador;Manual;Desoldador de buit;4;PENDENT
+Multimetre;Mesura;Multimetre digital;1;EN_CURS
+Oscil·loscopi;Mesura;Oscil·loscopi de 100MHz;3;ACABAT
+Generador de senyals;Mesura;Generador de senyals;0;PENDENT
+Font d'alimentacio;Electrica;Font d'alimentacio regulable;2;EN_CURS
+Carregador de bateries;Electric;Carregador de bateries;4;ACABAT
+Bateria recarregable;Electrica;Bateria recarregable;6;ACABAT
+Cable USB;Informatica;Cable USB de dades;8;PENDENT
+Convertidor;Electric;Convertidor de corrent;3;EN_CURS
+Inversor;Electric;Inversor de tensio;1;ACABAT
+Rele;Electric;Rele de 12V;5;ACABAT
+Interruptor;Electric;Interruptor de paret;4;PENDENT
+Endoll;Electric;Endoll electric;7;EN_CURS
+Llum LED;Il·luminacio;Llum LED de 10W;2;ACABAT
+Transformador;Electric;Transformador de 220V;1;ACABAT
+Motor electric;Electric;Motor electric de 100W;0;PENDENT
+Ventilador;Electric;Ventilador de taula;3;EN_CURS
+Radiador;Electric;Radiador electric;2;ACABAT
+Calefactor;Electric;Calefactor de gas;4;ACABAT
+Termostat;Mesura;Termostat digital;1;PENDENT
+Sensor de temperatura;Sensor;Sensor de temperatura;2;EN_CURS
+Sensor de pressio;Sensor;Sensor de pressio;3;ACABAT
+Sensor de moviment;Sensor;Sensor de moviment;5;ACABAT
+Camera de seguretat;Seguretat;Camera de seguretat;2;PENDENT
+Gravadora;Seguretat;Gravadora de video;1;EN_CURS
+Reproductor DVD;Electronica;Reproductor DVD;0;PENDENT
+Altaveu;Audio;Altaveu Bluetooth;4;ACABAT
+Microfon;Audio;Microfon de condensador;3;ACABAT
+Auriculars;Audio;Auriculars sense fils;6;PENDENT
+Pantalla LCD;Informatica;Pantalla LCD 15 polzades;2;EN_CURS
+Monitor;Informatica;Monitor de 24 polzades;1;ACABAT
+Teclat;Informatica;Teclat mecanic;4;ACABAT
+Ratoli;Informatica;Ratoli optic;7;PENDENT
+Impressora;Informatica;Impressora laser;3;EN_CURS
+Scanner;Informatica;Scanner de documents;2;ACABAT
+Fotocopiadora;Informatica;Fotocopiadora digital;1;ACABAT
+Fax;Informatica;Fax tradicional;0;PENDENT
+Telefon;Comunicacio;Telefon sense fil;4;EN_CURS
+Mobil;Comunicacio;Telefon intel·ligent;2;ACABAT
+Tablet;Informatica;Tablet tactil;3;ACABAT
+Ordinador portatil;Informatica;Ordinador portatil;5;PENDENT
+Ordinador de sobretaula;Informatica;Ordinador de sobretaula;1;EN_CURS
+Servidor;Informatica;Servidor de dades;2;ACABAT
+Router;Xarxa;Router WiFi;4;ACABAT
+Switch;Xarxa;Switch de xarxa;3;PENDENT
+Hub;Xarxa;Hub USB;6;EN_CURS
+Adaptador;Electric;Adaptador de corrent;2;ACABAT
+Carregador USB;Electric;Carregador USB;5;ACABAT
+Bateria externa;Electrica;Bateria externa portatil;1;PENDENT
+Disc dur extern;Informatica;Disc dur extern 1TB;3;EN_CURS
+Memoria USB;Informatica;Memoria USB 64GB;4;ACABAT
+Targeta SD;Informatica;Targeta SD 128GB;7;ACABAT
+Lector de targetes;Informatica;Lector de targetes;2;PENDENT
+Camera fotografica;Fotografia;Camera fotografica;1;EN_CURS
+Videocamera;Fotografia;Videocamera 4K;0;PENDENT
+Tripode;Fotografia;Tripode per a camera;3;ACABAT
+Filtre de llum;Fotografia;Filtre de llum;4;ACABAT
+Objectiu;Fotografia;Objectiu gran angular;2;PENDENT
+Flash;Fotografia;Flash extern;1;EN_CURS
+Antena;Comunicacio;Antena de televisio;4;ACABAT
+Receptor;Comunicacio;Receptor de senyal;3;ACABAT
+Transmissor;Comunicacio;Transmissor FM;1;PENDENT
+Modulador;Comunicacio;Modulador de senyal;2;EN_CURS
+Demodulador;Comunicacio;Demodulador de senyal;3;ACABAT
+Amplificador;Audio;Amplificador d'audio;5;ACABAT
+Equalitzador;Audio;Equalitzador de so;2;PENDENT
+Mesclador;Audio;Mesclador d'audio;1;EN_CURS
+Sintetitzador;Audio;Sintetitzador de so;0;PENDENT
+Maquina de cosir;Llar;Maquina de cosir electrica;3;ACABAT
+Planxa;Llar;Planxa de vapor;4;ACABAT
+Aspirador;Llar;Aspirador de pols;6;PENDENT
+Robot aspirador;Llar;Robot aspirador automatic;2;EN_CURS
+Fregadora;Llar;Fregadora electrica;1;ACABAT
+Lavadora;Llar;Lavadora automatica;0;PENDENT
+Secadora;Llar;Secadora de roba;3;EN_CURS
+Forn;Llar;Forn electric;2;ACABAT
+Microones;Llar;Microones;4;ACABAT
+Cafetera;Llar;Cafetera electrica;3;EN_CURS
+Batedora;Llar;Batedora de cuina;2;ACABAT
