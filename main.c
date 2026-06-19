@@ -133,7 +133,7 @@ int main() {
                         saveTasques(tasques, numTasques);
                         break;
                     case 4:
-                        printf("Opcio 4 (not implemented yet)\n");
+                        mostrarEinesCreades(eines, numEines);
                         break;
                     case 5:
                         printf("Opcio 5 (not implemented yet)\n");

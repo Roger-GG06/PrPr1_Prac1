@@ -2,3 +2,4 @@ roger;contra;1234;MINION
 ga;ga;12;SUPERMINION
 MinEng;contra;1234;MINION
 EngMi;contra;1234;MINION_ENG
+Roger;Roger;1111;MINION_ENG

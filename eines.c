@@ -78,9 +78,9 @@ void mostrarEinesACrear(eina *eines, int numEines) {
         return;
     }
     
-    printf("\n\t\t=== LLISTAT D'EINES A FABRICAR ===\n");
+    printf("\n\t\t=== TOOLS IN PROCESS ===\n");
     printf("---------------------------------------------------------------------\n");
-    printf("Nom\t\t\t | Tipus\t\t| Quantitat | Estat\n");
+    printf(" Name\t\t\t| Type\t\t\t| Quantity  | State\n");
     printf("---------------------------------------------------------------------\n");
     
     for (int i = 0; i < numEines; i++) {
@@ -111,3 +111,45 @@ void mostrarEinesACrear(eina *eines, int numEines) {
     }
     printf("---------------------------------------------------------------------\n");
 }
+
+void mostrarEinesCreades(eina *eines, int numEines) {
+    int einesMostrades = 0;
+    if (numEines == 0) {
+        printf("\nNo hi ha eines disponibles.\n");
+        return;
+    }
+    
+    printf("\n\t\t=== FINISHED TOOLS ===\n");
+    printf("---------------------------------------------------------------------\n");
+    printf(" Name\t\t\t| Type\t\t\t| Quantity  | State\n");
+    printf("---------------------------------------------------------------------\n");
+    
+    for (int i = 0; i < numEines; i++) {
+        char estatStr[MAX_STR];
+        int mostrar = 1;
+        switch (eines[i].creacio) {
+            case PENDENT:   
+                mostrar = 0; 
+                break;
+            case EN_CURS:
+                mostrar = 0;  
+                break;
+            case ACABAT:      
+                strcpy(estatStr, "FINISHED"); 
+                break;
+            default:
+                strcpy(estatStr, "DESCONEGUT");           
+                break;
+        }
+        if(mostrar){
+            printf("%-24s | %-20s | %-9d | %s\n", eines[i].nom, eines[i].type, eines[i].quantity, estatStr);
+            einesMostrades++;
+        }  
+
+    }
+    if(einesMostrades == 0){
+        printf("There are no tools finished yet\n");
+    }
+    printf("---------------------------------------------------------------------\n");
+}
+

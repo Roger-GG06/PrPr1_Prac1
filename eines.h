@@ -6,5 +6,6 @@
 
 void loadEines(eina *eines, int *numEines);
 void mostrarEinesACrear(eina *eines, int numEines);
+void mostrarEinesCreades(eina *eines, int numEines);
 
 #endif
