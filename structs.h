@@ -5,7 +5,10 @@
 #define MAX_LENGTH 1000
 #define MAX_USERS 250
 #define MAX_EINES 1000
-#define MAX_TASKS 1000
+#define MAX_TASKS 2000
+#define MAX_PIECE 4000
+
+#define MAX_PIECE_PER_EINA 4
 
 #define USERS_FILE "Data\\users.txt"
 #define EINES_FILE "Data\\eines.txt"
@@ -38,6 +41,7 @@ typedef struct{
     char descripcio[MAX_LENGTH];
     int quantity;
     State creacio;
+    piece *pieces;
 } eina;
 
 typedef struct{
@@ -49,5 +53,10 @@ typedef struct{
     char descripcio[MAX_LENGTH];
 } task;
 
+typedef struct {
+    char nom[MAX_STR];
+    char descripcio[MAX_LENGTH];
+    float durada;
+} piece;
 
 #endif
