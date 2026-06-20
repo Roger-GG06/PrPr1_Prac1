@@ -60,15 +60,31 @@ void loadPieces(piece *pieces, int *numPieces) {
     fclose(fp);
 }
 
+void savePieces(piece *pieces, int numPieces) {
+    FILE *fp = fopen(PIECES_FILE, "w");
+    
+    if (fp == NULL) {
+        printf("\nERROR: cannot write pieces file\n");
+        return;
+    }
+    
+    for (int i = 0; i < numPieces; i++) {
+        fprintf(fp, "%s;%s;%d;%s\n", pieces[i].nom, pieces[i].descripcio, pieces[i].durada, pieces[i].creador);
+    }
+    
+    fclose(fp);
+}
+
+
 void showPieces(piece *pieces, int numPieces){
     printf("PIECES AVAILABLE\n");
-    for(int i = 1; i < numPieces; i++){
-        printf("%d) %s\n", i, pieces[i-1].nom);
+    for(int i = 0; i < numPieces; i++){
+        printf("%d) %s\n", i + 1, pieces[i].nom);
     }
 }
 
 void getPiece(piece *pieces, int piecePosition, char *namePiece){
-    strcpy(namePiece, pieces[piecePosition].nom);
+    strcpy(namePiece, pieces[piecePosition - 1].nom);
 }
 
 void createNewPiece(piece *pieces, int *numPieces, char nameUser[MAX_STR]){
@@ -91,4 +107,6 @@ void createNewPiece(piece *pieces, int *numPieces, char nameUser[MAX_STR]){
     strcpy(newPiece.creador, nameUser);
     newPiece.durada = durada;
 
+    pieces[(*numPieces)] = newPiece;
+    (*numPieces)++;
 }

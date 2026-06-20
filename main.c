@@ -157,6 +157,7 @@ int main() {
                         break;
                     case 6:
                         createNewPiece(pieces, &numPieces, users[userPosition].user);
+                        savePieces(pieces, numPieces);
                         break;
                     case 7:
                         printf("Opcio 7 (not implemented yet)\n");
