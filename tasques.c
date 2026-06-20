@@ -252,13 +252,7 @@ void saveTasques(task *tasques, int numTasques) {
             default:        estatStr = "PENDENT"; break;
         }
         
-        fprintf(fp, "%s;%s;%s;%s;%.1f;%s\n", 
-                estatStr,
-                tasques[i].nom,
-                tasques[i].usuari,
-                tasques[i].hora,
-                tasques[i].durada,
-                tasques[i].descripcio);
+        fprintf(fp, "%s;%s;%s;%s;%.1f;%s\n", estatStr, tasques[i].nom, tasques[i].usuari, tasques[i].hora, tasques[i].durada, tasques[i].descripcio);
     }
     
     fclose(fp);

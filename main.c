@@ -149,7 +149,8 @@ int main() {
                         break;
                     case 5:
                         if(numPieces > 0){
-                            crearNovaEina(eines, &numEines, &users[userPosition], pieces, numPieces);
+                            crearNovaEina(eines, &numEines, users, userPosition, pieces, numPieces);
+                            saveEines(eines, numEines);
                         } else {
                             printf("There are no pieces to build a new tool.");
                         }

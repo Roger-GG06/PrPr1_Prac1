@@ -70,6 +70,36 @@ void loadEines(eina *eines, int *numEines) {
     fclose(fp);
 }  
 
+void saveEines(eina *eines, int numEines) {
+    FILE *fp = fopen(EINES_FILE, "w");
+    
+    if (fp == NULL) {
+        printf("\nERROR: cannot write eina file\n");
+        return;
+    }
+    
+    for (int i = 0; i < numEines; i++) {
+        const char *estatStr;
+        
+        switch (eines[i].creacio) {
+            case PENDENT:   estatStr = "PENDENT"; break;
+            case EN_CURS:   estatStr = "EN_CURS"; break;
+            case ACABAT:    estatStr = "ACABAT"; break;
+            default:        estatStr = "PENDENT"; break;
+        }
+        
+        fprintf(fp, "%s;%s;%s;%d;%s;%d", eines[i].nom, eines[i].type, eines[i].descripcio, eines[i].quantity, estatStr, eines[i].numPieces);
+        
+        for (int p = 0; p < eines[i].numPieces; p++) {
+            fprintf(fp, ";%s", eines[i].pieces[p]);
+        }
+        
+        fprintf(fp, "\n");
+    }
+    
+    fclose(fp);
+}
+
 void mostrarEinesACrear(eina *eines, int numEines) {
     int einesMostrades = 0;
     if (numEines == 0) {
@@ -160,9 +190,9 @@ void mostrarEinesCreades(eina *eines, int numEines) {
     printf("--------------------------------------------------------------------------------\n");
 }
 
-void crearNovaEina(eina *eines, int *numEines, user *usuari, piece *pieces, int numPieces){
+void crearNovaEina(eina *eines, int *numEines, user *usuaris, int posicioUsuari, piece *pieces, int numPieces){
     eina newEina;
-    char name[MAX_STR], type[MAX_STR], description[MAX_LENGTH], namePiece[MAX_STR], creacio[MAX_STR];
+    char name[MAX_STR], type[MAX_STR], description[MAX_LENGTH], namePiece[MAX_STR];
     int pieceEscollida, durada;
     int posicioPiece = 0;
     int end = 0;
@@ -178,7 +208,7 @@ void crearNovaEina(eina *eines, int *numEines, user *usuari, piece *pieces, int 
 
     while(!end){
         showPieces(pieces, numPieces);
-        printf("0) No more pieces.\n");
+        printf("0) No more pieces.\n\n");
         printf("Choose a piece: ");
         pieceEscollida = leerInt();
         if(numPieces + 1 < pieceEscollida || pieceEscollida < 0){
@@ -201,17 +231,19 @@ void crearNovaEina(eina *eines, int *numEines, user *usuari, piece *pieces, int 
     printf("How long did it take you (in minutes)? ");
     durada = leerInt();
 
-    printf("When did u started? This format -> (xx:xx) : ");
-    leerString(creacio);
 
-    if(!comprovarHorari(creacio)){
-        printf("Wrong format it has to be: (xx:xx) ");
-        return;
-    }
-
+    newEina.creacio = ACABAT;
     strcpy(newEina.descripcio, description);
     strcpy(newEina.nom, name);
-    newEina.numPieces = numPieces;
+
+    newEina.numPieces = posicioPiece;
     strcpy(newEina.type, type);
+    newEina.quantity = 1;
+
+    eines[(*numEines)] = newEina;
+    (*numEines)++;
+
+
+    usuaris[posicioUsuari].tempsEines += durada;
 
 }

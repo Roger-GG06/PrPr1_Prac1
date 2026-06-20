@@ -57,6 +57,7 @@ void loadPieces(piece *pieces, int *numPieces) {
 }
 
 void showPieces(piece *pieces, int numPieces){
+    printf("PIECES AVAILABLE\n");
     for(int i = 1; i < numPieces; i++){
         printf("%d) %s\n", i, pieces[i-1].nom);
     }
