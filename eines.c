@@ -181,13 +181,20 @@ void crearNovaEina(eina *eines, int *numEines, user *usuari, piece *pieces, int 
         printf("0) No more pieces.\n");
         printf("Choose a piece: ");
         pieceEscollida = leerInt();
-        
-        getPiece(pieces, pieceEscollida, namePiece);
-        strcpy(newEina.pieces[posicioPiece], namePiece);
-        posicioPiece++;
-
-        if(pieceEscollida == 0){
-            end = 1;
+        if(numPieces + 1 < pieceEscollida || pieceEscollida < 0){
+            printf("Ha de ser del 0 al %d\n", numPieces + 1);
+        } else {
+            if(pieceEscollida != 0){
+                getPiece(pieces, pieceEscollida, namePiece);
+                strcpy(newEina.pieces[posicioPiece], namePiece);
+                posicioPiece++;
+            } else {
+                if(!posicioPiece){
+                    printf("You must choose at least 1 piece.\n");
+                } else {
+                    end = 1;
+                }
+            }
         }
     }
 
