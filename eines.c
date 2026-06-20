@@ -96,7 +96,7 @@ void saveEines(eina *eines, int numEines) {
             default:        estatStr = "PENDENT"; break;
         }
         
-        fprintf(fp, "%s;%s;%s;%s;%d;%s;%d", eines[i].nom, eines[i].creador, eines[i].type, eines[i].descripcio, eines[i].quantity, estatStr, eines[i].numPieces);
+        fprintf(fp, "%s;%s;%s;%s;%d;%s;%d;%d", eines[i].nom, eines[i].creador, eines[i].type, eines[i].descripcio, eines[i].quantity, estatStr, eines[i].temps, eines[i].numPieces);
         
         for (int p = 0; p < eines[i].numPieces; p++) {
             fprintf(fp, ";%s", eines[i].pieces[p]);
@@ -248,6 +248,7 @@ void crearNovaEina(eina *eines, int *numEines, user *usuaris, int posicioUsuari,
     strcpy(newEina.type, type);
     strcpy(newEina.creador, usuaris[posicioUsuari].user);
     newEina.quantity = 1;
+    newEina.temps = durada;
 
     eines[(*numEines)] = newEina;
     (*numEines)++;
@@ -270,21 +271,42 @@ void showTools(eina *eines, int numEines){
     }
 }
 
+
 void afegirPiece(piece *pieces, int numPiece, eina *eines, int numEines){
-    char pieceE[MAX_STR];
+    char pieceE[MAX_STR] = {0};
     int pieceEscollida = 0, einaEscollida = 0;
     int numPieceEina = 0;
 
     showPieces(pieces, numPiece);
+    
     printf("Which piece do you want to add? ");
     pieceEscollida = leerInt();
-    getPiece(pieces, numPiece, pieceE);
+    
+    getPiece(pieces, pieceEscollida, pieceE);
 
     showTools(eines, numEines);
+    
     printf("To which tool do you want to add it? ");
     einaEscollida = leerInt();
+
+    if (einaEscollida < 1 || einaEscollida > numEines) {
+        printf("The tools are between 1 - %d", numEines);
+        return;
+    }
+
     numPieceEina = eines[einaEscollida - 1].numPieces;
+
+    printf("[DEBUG] einaEscollida = %s\n", eines[einaEscollida - 1].nom);
+    printf("[DEBUG] numPieceEina (antes de añadir) = %d\n", numPieceEina);
+    printf("%s;%s;%s;%s;%d;%d", eines[einaEscollida - 1].nom, eines[einaEscollida - 1].creador, eines[einaEscollida - 1].type, eines[einaEscollida - 1].descripcio, eines[einaEscollida - 1].quantity, eines[einaEscollida - 1].numPieces);
+
+    if (numPieceEina >= MAX_PIECE_PER_EINA) {
+        printf("Maximum pieces for tool reached (16 pieces)");
+        return;
+    }
+
     strcpy(eines[einaEscollida - 1].pieces[numPieceEina], pieceE);
-
-
+    eines[einaEscollida - 1].numPieces++;
+    
+    saveEines(eines, numEines);
 }
