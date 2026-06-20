@@ -252,5 +252,39 @@ void crearNovaEina(eina *eines, int *numEines, user *usuaris, int posicioUsuari,
     eines[(*numEines)] = newEina;
     (*numEines)++;
 
+}
+
+void showTools(eina *eines, int numEines){
+    printf("\n=== TOOLS ===\n");
+    for(int i = 0; i < numEines; i++){
+        char estatStr[MAX_STR];
+        
+        switch (eines[i].creacio) {
+            case PENDENT:   strcpy(estatStr, "PENDENT"); break;
+            case EN_CURS:   strcpy(estatStr, "EN CURS"); break;
+            case ACABAT:    strcpy(estatStr, "ACABAT"); break;
+            default:        strcpy(estatStr, "DESCONEGUT"); break;
+        }
+        
+        printf("%d) %s - %s (Creador: %s)\n", i + 1, eines[i].nom, estatStr, eines[i].creador);
+    }
+}
+
+void afegirPiece(piece *pieces, int numPiece, eina *eines, int numEines){
+    char pieceE[MAX_STR];
+    int pieceEscollida = 0, einaEscollida = 0;
+    int numPieceEina = 0;
+
+    showPieces(pieces, numPiece);
+    printf("Which piece do you want to add? ");
+    pieceEscollida = leerInt();
+    getPiece(pieces, numPiece, pieceE);
+
+    showTools(eines, numEines);
+    printf("To which tool do you want to add it? ");
+    einaEscollida = leerInt();
+    numPieceEina = eines[einaEscollida - 1].numPieces;
+    strcpy(eines[einaEscollida - 1].pieces[numPieceEina], pieceE);
+
 
 }

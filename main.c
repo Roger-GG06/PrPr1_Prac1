@@ -160,7 +160,7 @@ int main() {
                         savePieces(pieces, numPieces);
                         break;
                     case 7:
-                        printf("Opcio 7 (not implemented yet)\n");
+                        afegirPiece(pieces, numPieces, eines, numEines);
                         break;
                     case 8:
                         printf("Opcio 8 (not implemented yet)\n");
