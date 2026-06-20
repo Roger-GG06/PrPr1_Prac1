@@ -27,36 +27,43 @@ void loadEines(eina *eines, int *numEines) {
         
         eina *e = &eines[*numEines];
         e->numPieces = 0;
+        e->temps = 0;
         for (int p = 0; p < MAX_PIECE_PER_EINA; p++) {
             e->pieces[p][0] = '\0';
         }
         
         while (token != NULL) {
             switch (camp) {
-                case 0:
+                case 0:  
                     strcpy(e->nom, token);
                     break;
-                case 1:
+                case 1: 
+                    strcpy(e->creador, token);
+                    break;
+                case 2:
                     strcpy(e->type, token);
                     break;
-                case 2: 
+                case 3:
                     strcpy(e->descripcio, token);
                     break;
-                case 3:
+                case 4: 
                     e->quantity = atoi(token);
                     break;
-                case 4: 
+                case 5:
                     if (strcmp(token, "PENDENT") == 0) e->creacio = PENDENT;
                     else if (strcmp(token, "EN_CURS") == 0) e->creacio = EN_CURS;
                     else if (strcmp(token, "ACABAT") == 0) e->creacio = ACABAT;
                     else e->creacio = PENDENT;
                     break;
-                case 5:
+                case 6:
+                    e->temps = atoi(token);
+                    break;
+                case 7: 
                     e->numPieces = atoi(token);
                     break;
                 default: 
-                    if (camp - 6 < MAX_PIECE_PER_EINA) {
-                        strcpy(e->pieces[camp - 6], token);
+                    if (camp - 8 < MAX_PIECE_PER_EINA) {
+                        strcpy(e->pieces[camp - 8], token);
                     }
                     break;
             }
@@ -68,7 +75,8 @@ void loadEines(eina *eines, int *numEines) {
     }
     
     fclose(fp);
-}  
+}
+
 
 void saveEines(eina *eines, int numEines) {
     FILE *fp = fopen(EINES_FILE, "w");
@@ -88,7 +96,7 @@ void saveEines(eina *eines, int numEines) {
             default:        estatStr = "PENDENT"; break;
         }
         
-        fprintf(fp, "%s;%s;%s;%d;%s;%d", eines[i].nom, eines[i].type, eines[i].descripcio, eines[i].quantity, estatStr, eines[i].numPieces);
+        fprintf(fp, "%s;%s;%s;%s;%d;%s;%d", eines[i].nom, eines[i].creador, eines[i].type, eines[i].descripcio, eines[i].quantity, estatStr, eines[i].numPieces);
         
         for (int p = 0; p < eines[i].numPieces; p++) {
             fprintf(fp, ";%s", eines[i].pieces[p]);
@@ -238,12 +246,11 @@ void crearNovaEina(eina *eines, int *numEines, user *usuaris, int posicioUsuari,
 
     newEina.numPieces = posicioPiece;
     strcpy(newEina.type, type);
+    strcpy(newEina.creador, usuaris[posicioUsuari].user);
     newEina.quantity = 1;
 
     eines[(*numEines)] = newEina;
     (*numEines)++;
 
-
-    usuaris[posicioUsuari].tempsEines += durada;
 
 }

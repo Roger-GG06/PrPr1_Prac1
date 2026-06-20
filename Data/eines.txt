@@ -1,1 +1,0 @@
-Tool;Type;Brief;1;ACABAT;9;Roda;Resort;Tub;Caragol;Engranatge;Rolam;Eix;Clau;Arandela

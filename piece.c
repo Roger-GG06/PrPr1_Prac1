@@ -24,7 +24,7 @@ void loadPieces(piece *pieces, int *numPieces) {
             line[len - 1] = '\0';
         }
         
-        char nomTemp[MAX_STR], descripcioTemp[MAX_LENGTH], duradaTemp[MAX_STR];
+        char nomTemp[MAX_STR], descripcioTemp[MAX_LENGTH], duradaTemp[MAX_STR], creadorTemp[MAX_STR];
         
         int i = 0, j = 0;
         int camp = 0;
@@ -33,6 +33,7 @@ void loadPieces(piece *pieces, int *numPieces) {
             if (line[i] == ';') {
                 if (camp == 0) nomTemp[j] = '\0';
                 else if (camp == 1) descripcioTemp[j] = '\0';
+                else if (camp == 2) duradaTemp[j] = '\0';
                 
                 camp++;
                 j = 0;
@@ -40,15 +41,18 @@ void loadPieces(piece *pieces, int *numPieces) {
                 if (camp == 0) nomTemp[j] = line[i];
                 else if (camp == 1) descripcioTemp[j] = line[i];
                 else if (camp == 2) duradaTemp[j] = line[i];
+                else if (camp == 3) creadorTemp[j] = line[i];
                 j++;
             }
         }
         
-        if (camp == 2) duradaTemp[j] = '\0';
+        if (camp >= 3) creadorTemp[j] = '\0';
         
         strcpy(pieces[*numPieces].nom, nomTemp);
         strcpy(pieces[*numPieces].descripcio, descripcioTemp);
-        pieces[*numPieces].durada = atof(duradaTemp);
+        pieces[*numPieces].durada = atoi(duradaTemp); 
+        strcpy(pieces[*numPieces].creador, creadorTemp);
+
         
         (*numPieces)++;
     }
@@ -65,4 +69,26 @@ void showPieces(piece *pieces, int numPieces){
 
 void getPiece(piece *pieces, int piecePosition, char *namePiece){
     strcpy(namePiece, pieces[piecePosition].nom);
+}
+
+void createNewPiece(piece *pieces, int *numPieces, char nameUser[MAX_STR]){
+    piece newPiece;
+    char name[MAX_STR], desc[MAX_STR];
+    int durada;
+
+    printf("\n\tCREATE NEW PIECE:\n");
+    printf("Name of the piece: ");
+    leerString(name);
+
+    printf("Write a brief description: ");
+    leerString(desc);
+
+    printf("How long did it take? ");
+    durada = leerInt();
+
+    strcpy(newPiece.nom, name);
+    strcpy(newPiece.descripcio, desc);
+    strcpy(newPiece.creador, nameUser);
+    newPiece.durada = durada;
+
 }

@@ -34,14 +34,13 @@ typedef struct{
     char password[MAX_STR];
     int pin;
     UserType type;
-    int tempsEines;
-    int tempsPiece;
 } user;
 
-
-
+//Cambiar todo otra puta vez
 typedef struct{
     char nom[MAX_STR];
+    char creador[MAX_STR];
+    int temps;
     char type[MAX_STR];
     char descripcio[MAX_LENGTH];
     int quantity;
@@ -50,19 +49,20 @@ typedef struct{
     char pieces[MAX_PIECE_PER_EINA][MAX_STR];
 } eina;
 
+typedef struct {
+    char nom[MAX_STR];
+    char descripcio[MAX_LENGTH];
+    int durada;
+    char creador[MAX_STR];
+} piece;
+
 typedef struct{
     State pendent;
     char nom[MAX_STR];
     char usuari[MAX_STR];
     char hora[MAX_STR];
-    float durada;
+    int durada;
     char descripcio[MAX_LENGTH];
 } task;
-
-typedef struct {
-    char nom[MAX_STR];
-    char descripcio[MAX_LENGTH];
-    float durada;
-} piece;
 
 #endif
