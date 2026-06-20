@@ -1,5 +1,5 @@
-roger;contra;1234;MINION
-ga;ga;12;SUPERMINION
-MinEng;contra;1234;MINION
-EngMi;contra;1234;MINION_ENG
-Roger;Roger;1111;MINION_ENG
+roger;contra;1234;MINION;0;0
+ga;ga;12;SUPERMINION;0;0
+MinEng;contra;1234;MINION;0;0
+EngMi;contra;1234;MINION_ENG;0;0
+Roger;Roger;1111;MINION_ENG;0;0

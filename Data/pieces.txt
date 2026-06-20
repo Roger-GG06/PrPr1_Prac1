@@ -1,0 +1,20 @@
+Caragol;Caragol de metall M4;0.5
+Roda;Roda dentada de 20 dents;1.0
+Resort;Resort d'acer;0.3
+Tub;Tub de coure de 10mm;0.8
+Caragol;Caragol de metall M6;0.6
+Engranatge;Engranatge de 30 dents;1.5
+Rolam;Rolam de boles;0.4
+Eix;Eix d'acer;1.2
+Clau;Clau anglesa de 10mm;0.3
+Arandela;Arandela plana M6;0.1
+Caragol;Caragol d'acer inoxidable M8;0.7
+Femella;Femella hexagonal M6;0.2
+Rosa;Rosa de fixacio;0.3
+Pern;Pern d'acer;0.4
+Tub;Tub d'alumini;0.9
+Resort;Resort de compressio;0.5
+Engranatge;Engranatge helicoïdal;2.0
+Roda;Roda de plast;0.6
+Eix;Eix de metall;1.0
+Clau;Clau de tots;0.4

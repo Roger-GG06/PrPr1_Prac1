@@ -13,6 +13,7 @@
 #define USERS_FILE "Data\\users.txt"
 #define EINES_FILE "Data\\eines.txt"
 #define TASQUES_FILE "Data\\tasques.txt"
+#define PIECES_FILE "Data\\pieces.txt"
 
 typedef enum{
     GRU,
@@ -33,7 +34,11 @@ typedef struct{
     char password[MAX_STR];
     int pin;
     UserType type;
+    int tempsEines;
+    int tempsPiece;
 } user;
+
+
 
 typedef struct{
     char nom[MAX_STR];
@@ -41,7 +46,8 @@ typedef struct{
     char descripcio[MAX_LENGTH];
     int quantity;
     State creacio;
-    piece *pieces;
+    int numPieces;
+    char pieces[MAX_PIECE_PER_EINA][MAX_STR];
 } eina;
 
 typedef struct{

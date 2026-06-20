@@ -22,54 +22,53 @@ void loadEines(eina *eines, int *numEines) {
             line[len - 1] = '\0';
         }
         
-        char nomTemp[MAX_STR], typeTemp[MAX_STR], descripcioTemp[MAX_STR];
-        char quantityTemp[MAX_STR], creacioTemp[MAX_STR];
-        
-        int i = 0, j = 0;
+        char *token = strtok(line, ";");
         int camp = 0;
         
-        for (i = 0; line[i] != '\0'; i++) {
-            if (line[i] == ';') {
-                if (camp == 0) nomTemp[j] = '\0';
-                else if (camp == 1) typeTemp[j] = '\0';
-                else if (camp == 2) descripcioTemp[j] = '\0';
-                else if (camp == 3) quantityTemp[j] = '\0';
-                
-                camp++;
-                j = 0;
-            } else {
-                if (camp == 0) nomTemp[j] = line[i];
-                else if (camp == 1) typeTemp[j] = line[i];
-                else if (camp == 2) descripcioTemp[j] = line[i];
-                else if (camp == 3) quantityTemp[j] = line[i];
-                else if (camp == 4) creacioTemp[j] = line[i];
-                j++;
-            }
+        eina *e = &eines[*numEines];
+        e->numPieces = 0;
+        for (int p = 0; p < MAX_PIECE_PER_EINA; p++) {
+            e->pieces[p][0] = '\0';
         }
         
-        if (camp == 4)creacioTemp[j] = '\0';
-
-        strcpy(eines[*numEines].nom, nomTemp);
-        strcpy(eines[*numEines].type, typeTemp);
-        strcpy(eines[*numEines].descripcio, descripcioTemp);
-        eines[*numEines].quantity = atoi(quantityTemp);
-        
-
-        if (strcmp(creacioTemp, "PENDENT") == 0) {
-            eines[*numEines].creacio = PENDENT;
-        } else if (strcmp(creacioTemp, "EN_CURS") == 0) {
-            eines[*numEines].creacio = EN_CURS;
-        } else if (strcmp(creacioTemp, "ACABAT") == 0) {
-            eines[*numEines].creacio = ACABAT;
-        } else {
-            eines[*numEines].creacio = PENDENT;
+        while (token != NULL) {
+            switch (camp) {
+                case 0:
+                    strcpy(e->nom, token);
+                    break;
+                case 1:
+                    strcpy(e->type, token);
+                    break;
+                case 2: 
+                    strcpy(e->descripcio, token);
+                    break;
+                case 3:
+                    e->quantity = atoi(token);
+                    break;
+                case 4: 
+                    if (strcmp(token, "PENDENT") == 0) e->creacio = PENDENT;
+                    else if (strcmp(token, "EN_CURS") == 0) e->creacio = EN_CURS;
+                    else if (strcmp(token, "ACABAT") == 0) e->creacio = ACABAT;
+                    else e->creacio = PENDENT;
+                    break;
+                case 5:
+                    e->numPieces = atoi(token);
+                    break;
+                default: 
+                    if (camp - 6 < MAX_PIECE_PER_EINA) {
+                        strcpy(e->pieces[camp - 6], token);
+                    }
+                    break;
+            }
+            camp++;
+            token = strtok(NULL, ";");
         }
         
         (*numEines)++;
     }
     
     fclose(fp);
-}   
+}  
 
 void mostrarEinesACrear(eina *eines, int numEines) {
     int einesMostrades = 0;
@@ -79,9 +78,9 @@ void mostrarEinesACrear(eina *eines, int numEines) {
     }
     
     printf("\n\t\t=== TOOLS IN PROCESS ===\n");
-    printf("---------------------------------------------------------------------\n");
-    printf(" Name\t\t\t| Type\t\t\t| Quantity  | State\n");
-    printf("---------------------------------------------------------------------\n");
+    printf("--------------------------------------------------------------------------------\n");
+    printf(" Name\t\t\t| Type\t\t\t| Quantity  | State    | Pieces \n");
+    printf("--------------------------------------------------------------------------------\n");
     
     for (int i = 0; i < numEines; i++) {
         char estatStr[MAX_STR];
@@ -101,7 +100,11 @@ void mostrarEinesACrear(eina *eines, int numEines) {
                 break;
         }
         if(mostrar){
-            printf("%-24s | %-20s | %-9d | %s\n", eines[i].nom, eines[i].type, eines[i].quantity, estatStr);
+            printf("%-23s | %-21s | %-9d | %-8s | ", eines[i].nom, eines[i].type, eines[i].quantity, estatStr);
+            for(int j = 0; j < eines[i].numPieces; j++){
+                printf("%s, ", eines[i].pieces[j]);
+            }
+            printf("\n");
             einesMostrades++;
         }  
 
@@ -109,7 +112,7 @@ void mostrarEinesACrear(eina *eines, int numEines) {
     if(einesMostrades == 0){
         printf("Totes les eines estan acabades.\n");
     }
-    printf("---------------------------------------------------------------------\n");
+    printf("--------------------------------------------------------------------------------\n");
 }
 
 void mostrarEinesCreades(eina *eines, int numEines) {
@@ -120,9 +123,9 @@ void mostrarEinesCreades(eina *eines, int numEines) {
     }
     
     printf("\n\t\t=== FINISHED TOOLS ===\n");
-    printf("---------------------------------------------------------------------\n");
-    printf(" Name\t\t\t| Type\t\t\t| Quantity  | State\n");
-    printf("---------------------------------------------------------------------\n");
+    printf("--------------------------------------------------------------------------------\n");
+    printf(" Name\t\t\t| Type\t\t\t| Quantity  | State    | Pieces \n");
+    printf("--------------------------------------------------------------------------------\n");
     
     for (int i = 0; i < numEines; i++) {
         char estatStr[MAX_STR];
@@ -142,7 +145,11 @@ void mostrarEinesCreades(eina *eines, int numEines) {
                 break;
         }
         if(mostrar){
-            printf("%-24s | %-20s | %-9d | %s\n", eines[i].nom, eines[i].type, eines[i].quantity, estatStr);
+            printf("%-23s | %-21s | %-9d | %-8s | ", eines[i].nom, eines[i].type, eines[i].quantity, estatStr);
+            for(int j = 0; j < eines[i].numPieces; j++){
+                printf("%s, ", eines[i].pieces[j]);
+            }
+            printf("\n");
             einesMostrades++;
         }  
 
@@ -150,6 +157,61 @@ void mostrarEinesCreades(eina *eines, int numEines) {
     if(einesMostrades == 0){
         printf("There are no tools finished yet\n");
     }
-    printf("---------------------------------------------------------------------\n");
+    printf("--------------------------------------------------------------------------------\n");
 }
 
+void crearNovaEina(eina *eines, int *numEines, user *usuari, piece *pieces, int numPieces){
+    eina newEina;
+    char name[MAX_STR], type[MAX_STR], description[MAX_LENGTH], namePiece[MAX_STR], creacio[MAX_STR];
+    int pieceEscollida, durada;
+    int posicioPiece = 0;
+    int end = 0;
+
+    printf("What is the name of the new tool? ");
+    leerString(name);
+
+    printf("What type of tool it is? ");
+    leerString(type);
+
+    printf("Make a brief description of the tool: ");
+    leerString(description);
+
+    while(!end){
+        showPieces(pieces, numPieces);
+        printf("0) No more pieces.\n");
+        printf("Choose a piece: ");
+        pieceEscollida = leerInt();
+        if(numPieces + 1 < pieceEscollida || pieceEscollida < 0){
+            printf("Ha de ser del 0 al %d\n", numPieces + 1);
+        } else {
+            if(pieceEscollida != 0){
+                getPiece(pieces, pieceEscollida, namePiece);
+                strcpy(newEina.pieces[posicioPiece], namePiece);
+                posicioPiece++;
+            } else {
+                if(!posicioPiece){
+                    printf("You must choose at least 1 piece.\n");
+                } else {
+                    end = 1;
+                }
+            }
+        }
+    }
+
+    printf("How long did it take you (in minutes)? ");
+    durada = leerInt();
+
+    printf("When did u started? This format -> (xx:xx) : ");
+    leerString(creacio);
+
+    if(!comprovarHorari(creacio)){
+        printf("Wrong format it has to be: (xx:xx) ");
+        return;
+    }
+
+    strcpy(newEina.descripcio, description);
+    strcpy(newEina.nom, name);
+    newEina.numPieces = numPieces;
+    strcpy(newEina.type, type);
+
+}

@@ -1,4 +1,4 @@
-Martell;Manual;Martell de ferro per a clavar;5;ACABAT
+Martell;Manual;Martell de ferro per a clavar;5;ACABAT;3;MEC;MIC;NIC
 Tornavis;Manual;Tornavis de punta plana;3;ACABAT
 Serra;Manual;Serra manual per a fusta;0;PENDENT
 Claus angles;Manual;Joc de claus angles metriques;4;ACABAT

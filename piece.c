@@ -55,3 +55,13 @@ void loadPieces(piece *pieces, int *numPieces) {
     
     fclose(fp);
 }
+
+void showPieces(piece *pieces, int numPieces){
+    for(int i = 1; i < numPieces; i++){
+        printf("%d) %s\n", i, pieces[i-1].nom);
+    }
+}
+
+void getPiece(piece *pieces, int piecePosition, char *namePiece){
+    strcpy(namePiece, pieces[piecePosition].nom);
+}

@@ -20,13 +20,17 @@ void loadUsers(user *users, int *userCount) {
         line[strlen(line)-1] = '\0';
         
         char userTemp[MAX_STR], passTemp[MAX_STR], pinTemp[MAX_STR], typeTemp[MAX_STR];
+        char tempsEinesTemp[MAX_STR], tempsPieceTemp[MAX_STR];
         int i = 0, j = 0;
         int camp = 0;
+        
         for (i = 0; line[i] != '\0'; i++) {
             if (line[i] == ';') {
                 if (camp == 0) userTemp[j] = '\0';
                 else if (camp == 1) passTemp[j] = '\0';
                 else if (camp == 2) pinTemp[j] = '\0';
+                else if (camp == 3) typeTemp[j] = '\0';
+                else if (camp == 4) tempsEinesTemp[j] = '\0';
                 
                 camp++;
                 j = 0;
@@ -35,20 +39,27 @@ void loadUsers(user *users, int *userCount) {
                 else if (camp == 1) passTemp[j] = line[i];
                 else if (camp == 2) pinTemp[j] = line[i];
                 else if (camp == 3) typeTemp[j] = line[i];
+                else if (camp == 4) tempsEinesTemp[j] = line[i];
+                else if (camp == 5) tempsPieceTemp[j] = line[i];
                 j++;
             }
         }
-        typeTemp[j] = '\0';
+        
+        
+        if (camp >= 5) tempsPieceTemp[j] = '\0';
         
         strcpy(users[*userCount].user, userTemp);
         strcpy(users[*userCount].password, passTemp);
         users[*userCount].pin = atoi(pinTemp);
-
+        
         if (strcmp(typeTemp, "GRU") == 0) users[*userCount].type = GRU;
         else if (strcmp(typeTemp, "MINION") == 0) users[*userCount].type = MINION;
         else if (strcmp(typeTemp, "SUPERMINION") == 0) users[*userCount].type = SUPERMINION;
         else if (strcmp(typeTemp, "MINION_ENG") == 0) users[*userCount].type = MINION_ENG;
         else users[*userCount].type = NONE;
+        
+        users[*userCount].tempsEines = atoi(tempsEinesTemp);
+        users[*userCount].tempsPiece = atoi(tempsPieceTemp);
 
         (*userCount)++;
     }
@@ -74,9 +85,8 @@ void saveUsers(user *users, int userCount) {
             case MINION_ENG:  typeStr = "MINION_ENG"; break;
             default:          typeStr = "NONE"; break;
         }
-        fprintf(fp, "%s;%s;%d;%s\n", users[i].user, users[i].password, users[i].pin, typeStr);
-
-
+        
+        fprintf(fp, "%s;%s;%d;%s;%d;%d\n", users[i].user, users[i].password, users[i].pin, typeStr,users[i].tempsEines, users[i].tempsPiece);
     }
     
     fclose(fp);
@@ -230,12 +240,14 @@ int registerUser(user *users, int *numUsers){
         printf("Invalid option. Defaulting to NONE.\n");
         selectedType = NONE;
         break;
-}
+    }
 
     strcpy(users[*numUsers].user, name);
     strcpy(users[*numUsers].password, password);
     users[*numUsers].pin = pin;
     users[*numUsers].type = selectedType;
+    users[*numUsers].tempsEines = 0;
+    users[*numUsers].tempsPiece = 0;
 
     int posicioRetornar = *numUsers;
     (*numUsers)++;

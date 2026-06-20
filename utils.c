@@ -81,3 +81,17 @@ user retornarTypeDisponible(user *users, int numUsers, UserType type, int opcioE
     }
     return usuariNull;
 }
+
+int comprovarHorari(char hora[MAX_STR]) {
+    int hores, minuts;
+    char separador;
+    
+    if (sscanf(hora, "%d%c%d", &hores, &separador, &minuts) == 3) {
+        if (separador == ':') {
+            if (hores >= 0 && hores <= 23 && minuts >= 0 && minuts <= 59) {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}

@@ -8,6 +8,7 @@
 #include "session.h"
 #include "eines.h"
 #include "tasques.h"
+#include "piece.h"
 
 void printMenuPrincipal() {
     printf("Welcome to LS Minions Club :) What would you like to do today?\n");
@@ -64,12 +65,14 @@ int main() {
     user *users = NULL;
     eina *eines = NULL;
     task *tasques = NULL;
+    piece *pieces = NULL;
 
-    int numUsers = 0, numEines = 0, numTasques = 0;
+    int numUsers = 0, numEines = 0, numTasques = 0, numPieces = 0;
     int opcio = 0, opcioLogged = -1;
     users = malloc(MAX_USERS * sizeof(user));
     eines = malloc(MAX_EINES * sizeof(eina));
     tasques = malloc(MAX_TASKS * sizeof(task));
+    pieces = malloc(MAX_PIECE * sizeof(piece));
 
     loadUsers(users, &numUsers);
     printf("%s", users[0].user);
@@ -86,12 +89,20 @@ int main() {
             switch (opcio) {
                 case 1:
                     userPosition = login(users, numUsers);
-                    loggedUser = users[userPosition].type;
+                    if(userPosition == -1 ){
+                        loggedUser = NONE;
+                    } else {
+                        loggedUser = users[userPosition].type;
+                    }
                     break;
                 case 2:
                     userPosition = registerUser(users, &numUsers);
-                    loggedUser = users[userPosition].type;
-                    saveUsers(users, numUsers);
+                    if(userPosition == -1 ){
+                        loggedUser = NONE;
+                    } else {
+                        loggedUser = users[userPosition].type;
+                        saveUsers(users, numUsers);
+                    }
                     break;
                 case 3:
                     printf("GoodBye!\n");
@@ -104,6 +115,7 @@ int main() {
             opcioLogged = -1;
             loadEines(eines, &numEines);
             loadTasques(tasques, &numTasques);
+            loadPieces(pieces, &numPieces);
 
             while(opcioLogged != 0){
                 printMenuMinion(loggedUser);
@@ -136,7 +148,11 @@ int main() {
                         mostrarEinesCreades(eines, numEines);
                         break;
                     case 5:
-                        printf("Opcio 5 (not implemented yet)\n");
+                        if(numPieces > 0){
+                            crearNovaEina(eines, &numEines, &users[userPosition], pieces, numPieces);
+                        } else {
+                            printf("There are no pieces to build a new tool.");
+                        }
                         break;
                     case 6:
                         printf("Opcio 6 (not implemented yet)\n");
