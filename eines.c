@@ -312,30 +312,68 @@ void afegirPiece(piece *pieces, int numPiece, eina *eines, int numEines){
 }
 
 void mostrarTempsTreballat(piece *pieces, int numPiece, eina *eines, int numEines, char user[MAX_STR]){
-    int totalTempsPieces = 0, totalTempsEines = 0;
-    int trobat = 0;
+    int trobat = 0, end = 0;
+    int filtre = 3;
     
-    for (int i = 0; i < numPiece; i++) {
-        if (strcmp(pieces[i].creador, user) == 0) {
-            printf("  %s: %d minuts\n", pieces[i].nom, pieces[i].durada);
-            totalTempsPieces += pieces[i].durada;
-            trobat = 1;
+    while(!end){
+        int totalTempsPieces = 0, totalTempsEines = 0;
+
+        if(filtre == 1){
+            printf("\n--- PIECES ---\n");
+        } else if(filtre == 2){
+            printf("\n--- TOOLS ---\n");
+        } else if(filtre == 3){
+            printf("\n--- ALL ---\n");
+        }
+
+        if(filtre == 1 || filtre == 3){
+            for (int i = 0; i < numPiece; i++) {
+                if (strcmp(pieces[i].creador, user) == 0) {
+                    printf("  %s: %d minuts\n", pieces[i].nom, pieces[i].durada);
+                    totalTempsPieces += pieces[i].durada;
+                    trobat = 1;
+                }
+            }
+        } 
+        if (filtre == 2 || filtre == 3) {
+            for (int i = 0; i < numEines; i++) {
+                if (strcmp(eines[i].creador, user) == 0) {
+                    printf("  %s: %d minuts\n", eines[i].nom, eines[i].temps);
+                    totalTempsEines += eines[i].temps;
+                    trobat = 1;
+                }
+            }
+        }
+
+        if (trobat) {
+            if(filtre == 1){
+                printf("\n--- PIECES ---\n");
+                printf("  Pieces time invested: %d minutes\n", totalTempsPieces);
+            } else if(filtre == 2){
+                printf("\n--- TOOLS ---\n");
+                printf("  Tools time invested: %d minutes\n",  totalTempsEines);
+            } else if(filtre == 3){
+                printf("\n--- TOTAL ---\n");
+                printf("  Total time invested: %d minutes\n", totalTempsPieces + totalTempsEines);
+            }
+        } else {
+            printf("\nNo has creat cap peça ni eina.\n");
+        }
+
+        printf("Do you want to filter by pieces or by tools: \n");
+        printf("1) Pieces \n");
+        printf("2) Tools \n");
+        printf("3) Everything \n");
+        printf("0) Close \n");
+        filtre = leerInt();
+
+        if(filtre < 0 || filtre > 3){
+            printf("It has to be between 0 - 3");
+            return;
+        }
+        
+        if(filtre == 0){
+            end = 1;
         }
     }
-
-    for (int i = 0; i < numEines; i++) {
-        if (strcmp(eines[i].creador, user) == 0) {
-            printf("  %s: %d minuts\n", eines[i].nom, eines[i].temps);
-            totalTempsEines += eines[i].temps;
-            trobat = 1;
-        }
-    }
-
-    if (trobat) {
-        printf("\n--- TOTAL ---\n");
-        printf("  Total temps treballat: %d minuts\n", totalTempsPieces + totalTempsEines);
-    } else {
-        printf("\nNo has creat cap peça ni eina.\n");
-    }
-
 }
