@@ -21,20 +21,6 @@ int parseTimeToInt(char horari[MAX_STR]){
     return resultat;
 }
 
-int comprovarHorari(char hora[MAX_STR]) {
-    int hores, minuts;
-    char separador;
-    
-    if (sscanf(hora, "%d%c%d", &hores, &separador, &minuts) == 3) {
-        if (separador == ':') {
-            if (hores >= 0 && hores <= 23 && minuts >= 0 && minuts <= 59) {
-                return 1;
-            }
-        }
-    }
-    return 0;
-}
-
 int comprovarHorariUsuari(int durada,char hora[MAX_STR], char novaHora[MAX_STR]){
     int horaMin = parseTimeToInt(hora);
     int novaHoraMin = parseTimeToInt(novaHora);
@@ -266,13 +252,7 @@ void saveTasques(task *tasques, int numTasques) {
             default:        estatStr = "PENDENT"; break;
         }
         
-        fprintf(fp, "%s;%s;%s;%s;%.1f;%s\n", 
-                estatStr,
-                tasques[i].nom,
-                tasques[i].usuari,
-                tasques[i].hora,
-                tasques[i].durada,
-                tasques[i].descripcio);
+        fprintf(fp, "%s;%s;%s;%s;%.1f;%s\n", estatStr, tasques[i].nom, tasques[i].usuari, tasques[i].hora, tasques[i].durada, tasques[i].descripcio);
     }
     
     fclose(fp);
