@@ -310,3 +310,32 @@ void afegirPiece(piece *pieces, int numPiece, eina *eines, int numEines){
     
     saveEines(eines, numEines);
 }
+
+void mostrarTempsTreballat(piece *pieces, int numPiece, eina *eines, int numEines, char user[MAX_STR]){
+    int totalTempsPieces = 0, totalTempsEines = 0;
+    int trobat = 0;
+    
+    for (int i = 0; i < numPiece; i++) {
+        if (strcmp(pieces[i].creador, user) == 0) {
+            printf("  %s: %d minuts\n", pieces[i].nom, pieces[i].durada);
+            totalTempsPieces += pieces[i].durada;
+            trobat = 1;
+        }
+    }
+
+    for (int i = 0; i < numEines; i++) {
+        if (strcmp(eines[i].creador, user) == 0) {
+            printf("  %s: %d minuts\n", eines[i].nom, eines[i].temps);
+            totalTempsEines += eines[i].temps;
+            trobat = 1;
+        }
+    }
+
+    if (trobat) {
+        printf("\n--- TOTAL ---\n");
+        printf("  Total temps treballat: %d minuts\n", totalTempsPieces + totalTempsEines);
+    } else {
+        printf("\nNo has creat cap peça ni eina.\n");
+    }
+
+}

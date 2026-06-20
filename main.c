@@ -163,7 +163,7 @@ int main() {
                         afegirPiece(pieces, numPieces, eines, numEines);
                         break;
                     case 8:
-                        printf("Opcio 8 (not implemented yet)\n");
+                        mostrarTempsTreballat( pieces, numPieces, eines, numEines, users[userPosition].user);
                         break;
                     case 9:
                         printf("Opcio 9 (not implemented yet)\n");
