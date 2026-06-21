@@ -1,1 +1,1 @@
-tool;Roger;type;tolation;1;ACABAT;1;Cog
+Super Hammer;Roger;Manual;To super hammer things;1;ACABAT;120;2;Hammer;Glue

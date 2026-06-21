@@ -160,13 +160,14 @@ int main() {
                         savePieces(pieces, numPieces);
                         break;
                     case 7:
-                        printf("Opcio 7 (not implemented yet)\n");
+                        afegirPiece(pieces, numPieces, eines, numEines);
                         break;
                     case 8:
-                        printf("Opcio 8 (not implemented yet)\n");
+                        mostrarTempsTreballat(pieces, numPieces, eines, numEines, users[userPosition].user);
                         break;
                     case 9:
-                        printf("Opcio 9 (not implemented yet)\n");
+                        consultarPieceEinesDissenyades(pieces, numPieces, eines, numEines, users[userPosition].user, users, numUsers);
+                        saveUsers(users, numUsers);
                         break;
                     default:
                         printf("Wrong Option (0-9)");

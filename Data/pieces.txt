@@ -1,1 +1,3 @@
 Cog;Cogging;100;Roger
+Glue;It is used to join two or more materials together.;10;Roger
+Hammer;Hammering;10;Roger

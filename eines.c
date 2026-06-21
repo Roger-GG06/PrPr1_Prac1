@@ -96,7 +96,7 @@ void saveEines(eina *eines, int numEines) {
             default:        estatStr = "PENDENT"; break;
         }
         
-        fprintf(fp, "%s;%s;%s;%s;%d;%s;%d", eines[i].nom, eines[i].creador, eines[i].type, eines[i].descripcio, eines[i].quantity, estatStr, eines[i].numPieces);
+        fprintf(fp, "%s;%s;%s;%s;%d;%s;%d;%d", eines[i].nom, eines[i].creador, eines[i].type, eines[i].descripcio, eines[i].quantity, estatStr, eines[i].temps, eines[i].numPieces);
         
         for (int p = 0; p < eines[i].numPieces; p++) {
             fprintf(fp, ";%s", eines[i].pieces[p]);
@@ -248,9 +248,201 @@ void crearNovaEina(eina *eines, int *numEines, user *usuaris, int posicioUsuari,
     strcpy(newEina.type, type);
     strcpy(newEina.creador, usuaris[posicioUsuari].user);
     newEina.quantity = 1;
+    newEina.temps = durada;
 
     eines[(*numEines)] = newEina;
     (*numEines)++;
 
+}
 
+void showTools(eina *eines, int numEines){
+    printf("\n=== TOOLS ===\n");
+    for(int i = 0; i < numEines; i++){
+        char estatStr[MAX_STR];
+        
+        switch (eines[i].creacio) {
+            case PENDENT:   strcpy(estatStr, "PENDENT"); break;
+            case EN_CURS:   strcpy(estatStr, "EN CURS"); break;
+            case ACABAT:    strcpy(estatStr, "ACABAT"); break;
+            default:        strcpy(estatStr, "DESCONEGUT"); break;
+        }
+        
+        printf("%d) %s - %s (Creador: %s)\n", i + 1, eines[i].nom, estatStr, eines[i].creador);
+    }
+}
+
+
+void afegirPiece(piece *pieces, int numPiece, eina *eines, int numEines){
+    char pieceE[MAX_STR] = {0};
+    int pieceEscollida = 0, einaEscollida = 0;
+    int numPieceEina = 0;
+
+    showPieces(pieces, numPiece);
+    
+    printf("Which piece do you want to add? ");
+    pieceEscollida = leerInt();
+    
+    getPiece(pieces, pieceEscollida, pieceE);
+
+    showTools(eines, numEines);
+    
+    printf("To which tool do you want to add it? ");
+    einaEscollida = leerInt();
+
+    if (einaEscollida < 1 || einaEscollida > numEines) {
+        printf("The tools are between 1 - %d", numEines);
+        return;
+    }
+
+    numPieceEina = eines[einaEscollida - 1].numPieces;
+
+    printf("[DEBUG] einaEscollida = %s\n", eines[einaEscollida - 1].nom);
+    printf("[DEBUG] numPieceEina (antes de añadir) = %d\n", numPieceEina);
+    printf("%s;%s;%s;%s;%d;%d", eines[einaEscollida - 1].nom, eines[einaEscollida - 1].creador, eines[einaEscollida - 1].type, eines[einaEscollida - 1].descripcio, eines[einaEscollida - 1].quantity, eines[einaEscollida - 1].numPieces);
+
+    if (numPieceEina >= MAX_PIECE_PER_EINA) {
+        printf("Maximum pieces for tool reached (16 pieces)");
+        return;
+    }
+
+    strcpy(eines[einaEscollida - 1].pieces[numPieceEina], pieceE);
+    eines[einaEscollida - 1].numPieces++;
+    
+    saveEines(eines, numEines);
+}
+
+void mostrarTempsTreballat(piece *pieces, int numPiece, eina *eines, int numEines, char user[MAX_STR]){
+    int trobat = 0, end = 0;
+    int filtre = 3;
+    
+    while(!end){
+        int totalTempsPieces = 0, totalTempsEines = 0;
+
+        if(filtre == 1){
+            printf("\n--- PIECES ---\n");
+        } else if(filtre == 2){
+            printf("\n--- TOOLS ---\n");
+        } else if(filtre == 3){
+            printf("\n--- ALL ---\n");
+        }
+
+        if(filtre == 1 || filtre == 3){
+            for (int i = 0; i < numPiece; i++) {
+                if (strcmp(pieces[i].creador, user) == 0) {
+                    printf("  %s: %d minuts\n", pieces[i].nom, pieces[i].durada);
+                    totalTempsPieces += pieces[i].durada;
+                    trobat = 1;
+                }
+            }
+        } 
+        if (filtre == 2 || filtre == 3) {
+            for (int i = 0; i < numEines; i++) {
+                if (strcmp(eines[i].creador, user) == 0) {
+                    printf("  %s: %d minuts\n", eines[i].nom, eines[i].temps);
+                    totalTempsEines += eines[i].temps;
+                    trobat = 1;
+                }
+            }
+        }
+
+        if (trobat) {
+            if(filtre == 1){
+                printf("\n--- PIECES ---\n");
+                printf("  Pieces time invested: %d minutes\n", totalTempsPieces);
+            } else if(filtre == 2){
+                printf("\n--- TOOLS ---\n");
+                printf("  Tools time invested: %d minutes\n",  totalTempsEines);
+            } else if(filtre == 3){
+                printf("\n--- TOTAL ---\n");
+                printf("  Total time invested: %d minutes\n", totalTempsPieces + totalTempsEines);
+            }
+        } else {
+            printf("\nNo has creat cap peça ni eina.\n");
+        }
+
+        printf("Do you want to filter by pieces or by tools: \n");
+        printf("1) Pieces \n");
+        printf("2) Tools \n");
+        printf("3) Everything \n");
+        printf("0) Close \n");
+        filtre = leerInt();
+
+        if(filtre < 0 || filtre > 3){
+            printf("It has to be between 0 - 3");
+            return;
+        }
+        
+        if(filtre == 0){
+            end = 1;
+        }
+    }
+}
+
+void consultarPieceEinesDissenyades(piece *pieces, int numPiece, eina *eines, int numEines, char usuari[MAX_STR], user *users, int numUsers){
+    int totalPieces = 0;
+    int totalEines = 0;
+    int total = 0;
+    int opcio = 0;
+        
+    for (int i = 0; i < numPiece; i++) {
+        if (strcmp(pieces[i].creador, usuari) == 0) {
+            totalPieces++;
+        }
+    }
+    
+    for (int i = 0; i < numEines; i++) {
+        if (strcmp(eines[i].creador, usuari) == 0) {
+            totalEines++;
+        }
+    }
+    
+    total = totalPieces + totalEines;
+
+    printf("\n--- RESULTS ---\n");
+    printf("  Pieces designed: %d\n", totalPieces);
+    printf("  Tools designed: %d\n", totalEines);
+    printf("  Total: %d\n", total);
+
+    if (total >= 20) {
+        printf("\nCongrats! You have designed %d elements (20 or more).\n", total);
+        printf("Do you want to evolve to SUPERMINION?\n");
+        printf("1) Yes\n");
+        printf("2) No\n");
+        printf("Option: ");
+        opcio = leerInt();
+        
+        if (opcio == 1) {
+            for (int i = 0; i < numUsers; i++) {
+                if (strcmp(users[i].user, usuari) == 0) {
+                    users[i].type = SUPERMINION;
+                    printf("You have evolved to SUPERMINION!\n");
+                    break;
+                }
+            }
+        } else {
+            printf("Has decidit seguir dissenyant.\n");
+        }
+    } else if (total >= 10) {
+        printf("\nCongrats! You have designed %d elements (10 or more).\n", total);
+        printf("Do you want to evolve to MINION?\n");
+        printf("1) Yes\n");
+        printf("2) No\n");
+        printf("Option: ");
+        opcio = leerInt();
+        
+        if (opcio == 1) {
+            for (int i = 0; i < numUsers; i++) {
+                if (strcmp(users[i].user, usuari) == 0) {
+                    users[i].type = MINION;
+                    printf("You have evolved to MINION!\n");
+                    break;
+                }
+            }
+        } else {
+            printf("You didn't evolve.\n");
+        }
+    } else {
+        printf("\nYou have designed %d items. You need 10 to evolve to MINION or 20 to evolve to SUPERMINION.\n", total);
+        printf("Keep designing!\n");
+    }
 }

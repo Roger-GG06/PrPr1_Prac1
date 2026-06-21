@@ -10,5 +10,8 @@ void saveEines(eina *eines, int numEines);
 void mostrarEinesACrear(eina *eines, int numEines);
 void mostrarEinesCreades(eina *eines, int numEines);
 void crearNovaEina(eina *eines, int *numEines, user *usuaris, int posicioUsuari, piece *pieces, int numPieces);
+void afegirPiece(piece *pieces, int numPiece, eina *eines, int numEines);
+void mostrarTempsTreballat(piece *pieces, int numPiece, eina *eines, int numEines, char user[MAX_STR]);
+void consultarPieceEinesDissenyades(piece *pieces, int numPiece, eina *eines, int numEines, char usuari[MAX_STR], user *users, int numUsers);
 
 #endif
