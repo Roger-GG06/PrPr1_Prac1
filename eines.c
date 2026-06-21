@@ -403,5 +403,46 @@ void consultarPieceEinesDissenyades(piece *pieces, int numPiece, eina *eines, in
     printf("  Tools designed: %d\n", totalEines);
     printf("  Total: %d\n", total);
 
-    
+    if (total >= 20) {
+        printf("\nCongrats! You have designed %d elements (20 or more).\n", total);
+        printf("Do you want to evolve to SUPERMINION?\n");
+        printf("1) Yes\n");
+        printf("2) No\n");
+        printf("Option: ");
+        opcio = leerInt();
+        
+        if (opcio == 1) {
+            for (int i = 0; i < numUsers; i++) {
+                if (strcmp(users[i].user, usuari) == 0) {
+                    users[i].type = SUPERMINION;
+                    printf("You have evolved to SUPERMINION!\n");
+                    break;
+                }
+            }
+        } else {
+            printf("Has decidit seguir dissenyant.\n");
+        }
+    } else if (total >= 10) {
+        printf("\nCongrats! You have designed %d elements (10 or more).\n", total);
+        printf("Do you want to evolve to MINION?\n");
+        printf("1) Yes\n");
+        printf("2) No\n");
+        printf("Option: ");
+        opcio = leerInt();
+        
+        if (opcio == 1) {
+            for (int i = 0; i < numUsers; i++) {
+                if (strcmp(users[i].user, usuari) == 0) {
+                    users[i].type = MINION;
+                    printf("You have evolved to MINION!\n");
+                    break;
+                }
+            }
+        } else {
+            printf("You didn't evolve.\n");
+        }
+    } else {
+        printf("\nYou have designed %d items. You need 10 to evolve to MINION or 20 to evolve to SUPERMINION.\n", total);
+        printf("Keep designing!\n");
+    }
 }
