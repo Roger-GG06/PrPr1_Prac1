@@ -1,0 +1,2 @@
+Motor;High power electric motor for industrial machinery;120;minE
+Gear;Hardened steel gear for power transmission;45;minE

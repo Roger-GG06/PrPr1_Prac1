@@ -1,0 +1,2 @@
+Electric Drill;minE;Power Tool;High power electric drill for industrial use;1;ACABAT;180;2;Motor;Gear
+Gearbox;minE;Transmission;Industrial gearbox for heavy machinery;1;PENDENT;0;1;Gear
