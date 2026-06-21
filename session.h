@@ -2,7 +2,7 @@
 #define SESSION_H
 
 #include "structs.h"
-#include "utils.h"
+#include "utilsFun.h"
 
 void loadUsers(user *users, int *userCount);
 void saveUsers(user *users, int numUsers);

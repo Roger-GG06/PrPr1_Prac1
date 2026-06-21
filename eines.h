@@ -2,11 +2,12 @@
 #define EINES_H
 
 #include "structs.h"
-#include "utils.h"
+#include "utilsFun.h"
 #include "piece.h"
 
 void loadEines(eina *eines, int *numEines);
 void saveEines(eina *eines, int numEines);
+void initEines(eina *eines, int *numEines, piece *pieces, int numPieces);
 void mostrarEinesACrear(eina *eines, int numEines);
 void mostrarEinesCreades(eina *eines, int numEines);
 void crearNovaEina(eina *eines, int *numEines, user *usuaris, int posicioUsuari, piece *pieces, int numPieces);

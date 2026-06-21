@@ -75,6 +75,20 @@ void savePieces(piece *pieces, int numPieces) {
     fclose(fp);
 }
 
+void initPieces(piece *pieces, int *numPieces) {
+    strcpy(pieces[0].nom, "Motor");
+    strcpy(pieces[0].descripcio, "High power electric motor for industrial machinery");
+    pieces[0].durada = 120;
+    strcpy(pieces[0].creador, "minE");
+    
+    strcpy(pieces[1].nom, "Gear");
+    strcpy(pieces[1].descripcio, "Hardened steel gear for power transmission");
+    pieces[1].durada = 45;
+    strcpy(pieces[1].creador, "minE");
+    
+    *numPieces = 2;
+}
+
 
 void showPieces(piece *pieces, int numPieces){
     printf("PIECES AVAILABLE\n");
@@ -94,10 +108,16 @@ void createNewPiece(piece *pieces, int *numPieces, char nameUser[MAX_STR]){
 
     printf("\n\tCREATE NEW PIECE:\n");
     printf("Name of the piece: ");
-    leerString(name);
+    if(leerString(name)){
+        printf("Name can't be void\n");
+        return;
+    } 
 
     printf("Write a brief description: ");
-    leerString(desc);
+    if(leerString(desc)){
+        printf("Description can't be void\n");
+        return;
+    } 
 
     printf("How long did it take? ");
     durada = leerInt();

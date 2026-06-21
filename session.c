@@ -19,7 +19,7 @@ void loadUsers(user *users, int *userCount) {
     while (fgets(line, sizeof(line), fp) != NULL) {
         line[strlen(line)-1] = '\0';
         
-        char userTemp[MAX_STR], passTemp[MAX_STR], pinTemp[MAX_STR], typeTemp[MAX_STR];
+        char userTemp[MAX_STR], passTemp[MAX_STR], pinTemp[MAX_STR], typeTemp[MAX_STR], fruitTemp[MAX_STR];
         int i = 0, j = 0;
         int camp = 0;
         
@@ -28,6 +28,7 @@ void loadUsers(user *users, int *userCount) {
                 if (camp == 0) userTemp[j] = '\0';
                 else if (camp == 1) passTemp[j] = '\0';
                 else if (camp == 2) pinTemp[j] = '\0';
+                else if (camp == 3) typeTemp[j] = '\0';
                 
                 camp++;
                 j = 0;
@@ -36,12 +37,13 @@ void loadUsers(user *users, int *userCount) {
                 else if (camp == 1) passTemp[j] = line[i];
                 else if (camp == 2) pinTemp[j] = line[i];
                 else if (camp == 3) typeTemp[j] = line[i];
+                else if (camp == 4) fruitTemp[j] = line[i];
                 j++;
             }
         }
         
         
-        if (camp >= 3) typeTemp[j] = '\0';
+        if (camp >= 4) fruitTemp[j] = '\0';
 
         strcpy(users[*userCount].user, userTemp);
         strcpy(users[*userCount].password, passTemp);
@@ -52,6 +54,8 @@ void loadUsers(user *users, int *userCount) {
         else if (strcmp(typeTemp, "SUPERMINION") == 0) users[*userCount].type = SUPERMINION;
         else if (strcmp(typeTemp, "MINION_ENG") == 0) users[*userCount].type = MINION_ENG;
         else users[*userCount].type = NONE;
+
+        strcpy(users[*userCount].fruit, fruitTemp);
 
         (*userCount)++;
     }
@@ -78,7 +82,7 @@ void saveUsers(user *users, int userCount) {
             default:          typeStr = "NONE"; break;
         }
         
-        fprintf(fp, "%s;%s;%d;%s\n", users[i].user, users[i].password, users[i].pin, typeStr);
+        fprintf(fp, "%s;%s;%d;%s;%s\n", users[i].user, users[i].password, users[i].pin, typeStr, users[i].fruit);
     }
     
     fclose(fp);
@@ -87,29 +91,29 @@ void saveUsers(user *users, int userCount) {
 void initUsers(user *users, int *numUsers) {
     *numUsers = 4;
     
-    // GRU
     strcpy(users[0].user, "gru");
     strcpy(users[0].password, "gru123");
     users[0].pin = 1111;
     users[0].type = GRU;
+    strcpy(users[0].fruit, "NONE");
     
-    // MINION
-    strcpy(users[1].user, "kevin");
-    strcpy(users[1].password, "kevin123");
+    strcpy(users[1].user, "min");
+    strcpy(users[1].password, "min123");
     users[1].pin = 2222;
     users[1].type = MINION;
+    strcpy(users[1].fruit, "BANANA");
     
-    // SUPERMINION
-    strcpy(users[2].user, "bob");
-    strcpy(users[2].password, "bob123");
+    strcpy(users[2].user, "sMin");
+    strcpy(users[2].password, "sMin123");
     users[2].pin = 3333;
     users[2].type = SUPERMINION;
+    strcpy(users[2].fruit, "BANANA");
     
-    // MINION ENGINEER
-    strcpy(users[3].user, "stuart");
-    strcpy(users[3].password, "stuart123");
+    strcpy(users[3].user, "minE");
+    strcpy(users[3].password, "minE123");
     users[3].pin = 4444;
     users[3].type = MINION_ENG;
+    strcpy(users[3].fruit, "BANANA");
 }
 
 int findUserByUsername(user *users, int userCount, char username[MAX_STR]) {
@@ -144,7 +148,6 @@ int validatePin(user u, int pin) {
 int login(user *users, int numUsers) {
     char username[MAX_STR];
     char password[MAX_STR];
-    char trash;
     int pin;
     int userIndex;
     
@@ -158,12 +161,12 @@ int login(user *users, int numUsers) {
     
     if (userIndex == -1) {
         printf("User not found.\n");
-        return NONE;
+        return -1;
     }
     
     printf("Password: ");
-    fgets(password, MAX_STR, stdin);
-    password[strlen(password) - 1] = '\0';
+    leerString(password);
+    
     
     if (validatePassword(users[userIndex], password)) {
         printf("Login successful! Welcome %s.\n", users[userIndex].user);
@@ -171,8 +174,7 @@ int login(user *users, int numUsers) {
     }
     
     printf("Incorrect password. Enter PIN: ");
-    scanf("%d", &pin);
-    scanf("%c", &trash);
+    pin = leerInt();    
     
     if (validatePin(users[userIndex], pin)) {
         printf("PIN correct. Login successful! Welcome %s.\n", users[userIndex].user);
@@ -186,18 +188,25 @@ int login(user *users, int numUsers) {
 int registerUser(user *users, int *numUsers){
     char name[MAX_STR];
     char password[MAX_STR];
-    int pin = 0, type = 0; 
+    char fruita[MAX_STR];
+    int pin = 0; 
     printf("\n=== REGISTER ===\n");
     
     printf("Username: ");
-    leerString(name);
+    if(leerString(name)){
+        printf("Name can't be void\n");
+        return -1;
+    }    
     if(findUserByUsername(users, *numUsers, name) != -1){
         printf("Username already in use\n");
         return -1;
     }
-
+    
     printf("Password: ");
-    leerString(password);
+    if(leerString(password)){
+        printf("Password can't be void\n");
+        return -1;
+    }
 
     printf("In case you forget the password. Enter a PIN: ");
     pin = leerInt();
@@ -206,36 +215,17 @@ int registerUser(user *users, int *numUsers){
         return -1;
     }
 
-    printf("\nSelect User Type:\n");
-    printf("\t1. GRU\n");
-    printf("\t2. MINION\n");
-    printf("\t3. SUPERMINION\n");
-    printf("\t4. MINION_ENG\n");
-    printf("Choose an option (1-4): ");
-    type = leerInt();
-    UserType selectedType;
+    printf("Which is your favorite fruit? ");
+    if(leerString(fruita)){
+        printf("Fruit can't be void\n");
+        return -1;
+    }    
 
-    switch(type) {
-    case 1:
-        selectedType = GRU;
-        break;
-    case 2:
-        selectedType = MINION;
-        break;
-    case 3:
-        selectedType = SUPERMINION;
-        break;
-    case 4:
-        selectedType = MINION_ENG;
-        break;
-    default:
-        printf("Invalid option. Defaulting to NONE.\n");
-        selectedType = NONE;
-        break;
-    }
+    UserType selectedType = MINION;
 
     strcpy(users[*numUsers].user, name);
     strcpy(users[*numUsers].password, password);
+    strcpy(users[*numUsers].fruit, fruita);
     users[*numUsers].pin = pin;
     users[*numUsers].type = selectedType;
 

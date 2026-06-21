@@ -4,43 +4,26 @@
 #include <ctype.h>
 
 #include "tasques.h"
+#include "utils.h"
 
-int parseTimeToInt(char horari[MAX_STR]){
-    int resultat = 0;
-    int multiplicador = 600;
-    int size = strlen(horari);
-    for(int i = 0; i < size; i++){
-        if(horari[i] == ':'){
-            multiplicador = 10;
-        } else if (horari[i] >= '0' && horari[i] <= '9'){
-            resultat = (horari[i] - '0') * multiplicador;
-            multiplicador = multiplicador / 10;
-        }
-    }
-
-    return resultat;
-}
-
-int comprovarHorariUsuari(int durada,char hora[MAX_STR], char novaHora[MAX_STR]){
-    int horaMin = parseTimeToInt(hora);
-    int novaHoraMin = parseTimeToInt(novaHora);
-
-    if(novaHoraMin >= horaMin && novaHoraMin <= horaMin + durada){
+int comprovarHorariUsuari(DateTime horaExist, int durada, DateTime novaHora){
+    int diff = calculateDifferenceInMinutes(horaExist, novaHora);
+    
+    if (diff >= 0 && diff <= durada) {
         return 0;
-    } 
-
+    }
     return 1;
 }
 
-int comprovatTotesTasquesHorari(task *tasques, int numTasques, char name[MAX_STR], char novaHora[MAX_STR]){
+int comprovatTotesTasquesHorari(task *tasques, int numTasques, char name[MAX_STR], DateTime novaHora){
     for(int i = 0; i < numTasques; i++){
         if(strcmp(name, tasques[i].usuari) == 0){
-            if(!comprovarHorariUsuari(tasques[i].durada, tasques[i].hora, novaHora)){
+            if(!comprovarHorariUsuari(tasques[i].hora, tasques[i].durada, novaHora)){
                 return 0;
             }
         }
     }
-    return 1;
+    return 1; 
 }
 
 void loadTasques(task *tasques, int *numTasques) {
@@ -98,12 +81,22 @@ void loadTasques(task *tasques, int *numTasques) {
             tasques[*numTasques].pendent = ACABAT;
         } else {
             tasques[*numTasques].pendent = PENDENT;
-        }
+        }   
         
         strcpy(tasques[*numTasques].nom, nomTemp);
         strcpy(tasques[*numTasques].usuari, usuariTemp);
-        strcpy(tasques[*numTasques].hora, horaTemp);
-        tasques[*numTasques].durada = atof(duradaTemp);
+
+        DateTime *dt = stringToDateTime(horaTemp);
+        if (dt != NULL && validateDateTime(*dt)) {
+            tasques[*numTasques].hora = *dt;
+            free(dt);
+        } else {
+            DateTime current = getCurrentDateTime();
+            tasques[*numTasques].hora = current;
+            if (dt) free(dt);
+        }
+
+        tasques[*numTasques].durada = atoi(duradaTemp);
         strcpy(tasques[*numTasques].descripcio, descripcioTemp);
         
         (*numTasques)++;
@@ -122,12 +115,13 @@ void mostrarTasquesPendents(task *tasques, int numTasques) {
     
     printf("\n\t\t=== LLISTAT DE TASQUES PENDENTS ===\n");
     printf("------------------------------------------------------------------------------------------------------\n");
-    printf("Estat\t\t | Nom\t\t\t\t | Usuari\t\t | Hora\t | Durada | Descripcio\n");
+    printf("Estat\t\t | Nom\t\t\t\t | Usuari\t\t | Hora\t\t | Durada | Descripcio\n");
     printf("------------------------------------------------------------------------------------------------------\n");
     
     for (int i = 0; i < numTasques; i++) {
         char estatStr[MAX_STR];
         int mostrar = 1;
+        char *horaStr = NULL;
         
         switch (tasques[i].pendent) {
             case PENDENT:
@@ -145,15 +139,11 @@ void mostrarTasquesPendents(task *tasques, int numTasques) {
         }
         
         if (mostrar) {
-            printf("%-15s | %-30s | %-20s | %-5s | %-7.1f | %s\n", 
-                   estatStr, 
-                   tasques[i].nom, 
-                   tasques[i].usuari, 
-                   tasques[i].hora, 
-                   tasques[i].durada, 
-                   tasques[i].descripcio);
+            horaStr = dateTimeToString(tasques[i].hora);
+            printf("%-15s | %-30s | %-20s | %-13s | %-7d | %s\n", estatStr, tasques[i].nom, tasques[i].usuari, horaStr, tasques[i].durada, tasques[i].descripcio);
             tasquesMostrades++;
         }
+        free(horaStr);
     }
     
     if (tasquesMostrades == 0) {
@@ -165,14 +155,19 @@ void mostrarTasquesPendents(task *tasques, int numTasques) {
 void crearNovaTasca(task *tasques, int *numTasques, user *users, int numUsers){
     int tipusInput;
     int usersAEscollir = 0, userEscollit = 0;
-    float duration = 0.0f;
+    int duration = 0;
     char horari[MAX_STR], descripition[MAX_LENGTH], nomTask[MAX_STR];
+    DateTime novaHora;
+    DateTime *dt = NULL;
     UserType typeTask = NONE;
     user userTriat = {0};
     task newTask = {0};
     
     printf("What is the name of the task: ");
-    leerString(nomTask);
+    if(leerString(nomTask)){
+        printf("Name can't be void\n");
+        return;
+    } 
 
     printf("Which type of task do you want to create:\n");
     printf("\t1. Creation of parts\n");
@@ -203,30 +198,46 @@ void crearNovaTasca(task *tasques, int *numTasques, user *users, int numUsers){
     userTriat = retornarTypeDisponible(users, numUsers, typeTask, userEscollit);
 
     printf("Make a brief description: ");
-    leerString(descripition);
+    if(leerString(descripition)){
+        printf("Descripition can't be void\n");
+        return;
+    } 
 
-    printf("Which schedule format -> (xx:xx) : ");
-    leerString(horari);
+    printf("Which schedule format -> (YYYY-MM-DD HH:MM) : ");
+    if(leerString(horari)){
+        printf("Schedule can't be void\n");
+        return;
+    } 
 
-    if(!comprovarHorari(horari)){
-        printf("It has to be this format -> (xx:xx)");
+    dt = stringToDateTime(horari);
+    if (dt == NULL) {
+        printf("Invalid date format. Use YYYY-MM-DD HH:MM\n");
         return;
     }
 
-    if(!comprovatTotesTasquesHorari(tasques, *numTasques, userTriat.user, horari)){
+    novaHora = *dt;
+    free(dt);
+
+    if (!validateDateTime(novaHora)) {
+        printf("Invalid date/time values.\n");
+        return;
+    }
+
+    
+
+    printf("How long does it take? ");
+    duration = leerInt();
+
+    if(!comprovatTotesTasquesHorari(tasques, *numTasques, userTriat.user, novaHora)){
         printf("This user it already has a task in this schedule");
         return;
     }
 
-    printf("How long does it take? ");
-    duration = leerFloat();
-
     strcpy(newTask.descripcio, descripition);
     newTask.durada = duration;
-    strcpy(newTask.hora, horari);    
+    newTask.hora = novaHora;    
     strcpy(newTask.nom, nomTask);
     newTask.pendent = PENDENT;
-    printf("\n%s\n", userTriat.user);
     strcpy(newTask.usuari, userTriat.user);
 
     tasques[(*numTasques)] = newTask;
@@ -243,7 +254,8 @@ void saveTasques(task *tasques, int numTasques) {
     }
     
     for (int i = 0; i < numTasques; i++) {
-        const char *estatStr;
+        char *estatStr;
+        char *date;
         
         switch (tasques[i].pendent) {
             case PENDENT:   estatStr = "PENDENT"; break;
@@ -251,8 +263,10 @@ void saveTasques(task *tasques, int numTasques) {
             case ACABAT:    estatStr = "ACABAT"; break;
             default:        estatStr = "PENDENT"; break;
         }
+        date = dateTimeToString(tasques[i].hora);
         
-        fprintf(fp, "%s;%s;%s;%s;%.1f;%s\n", estatStr, tasques[i].nom, tasques[i].usuari, tasques[i].hora, tasques[i].durada, tasques[i].descripcio);
+        fprintf(fp, "%s;%s;%s;%s;%d;%s\n", estatStr, tasques[i].nom, tasques[i].usuari, date, tasques[i].durada, tasques[i].descripcio);
+        free(date);
     }
     
     fclose(fp);
