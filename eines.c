@@ -377,3 +377,31 @@ void mostrarTempsTreballat(piece *pieces, int numPiece, eina *eines, int numEine
         }
     }
 }
+
+void consultarPieceEinesDissenyades(piece *pieces, int numPiece, eina *eines, int numEines, char usuari[MAX_STR], user *users, int numUsers){
+    int totalPieces = 0;
+    int totalEines = 0;
+    int total = 0;
+    int opcio = 0;
+        
+    for (int i = 0; i < numPiece; i++) {
+        if (strcmp(pieces[i].creador, usuari) == 0) {
+            totalPieces++;
+        }
+    }
+    
+    for (int i = 0; i < numEines; i++) {
+        if (strcmp(eines[i].creador, usuari) == 0) {
+            totalEines++;
+        }
+    }
+    
+    total = totalPieces + totalEines;
+
+    printf("\n--- RESULTS ---\n");
+    printf("  Pieces designed: %d\n", totalPieces);
+    printf("  Tools designed: %d\n", totalEines);
+    printf("  Total: %d\n", total);
+
+    
+}
