@@ -3,7 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 
-#include "utils.h"
+#include "utilsFun.h"
 #include "structs.h"
 #include "session.h"
 #include "eines.h"
@@ -21,7 +21,6 @@ void printMenuPrincipal() {
 void printComu(){
     printf("\t1. Llistar eines\n");
     printf("\t2. Llistar tasques\n");
-    printf("\t3. Creacio de tasques\n");
 }
 
 void printMenuMinion(UserType type){
@@ -29,6 +28,7 @@ void printMenuMinion(UserType type){
         case GRU:
             printf("\n=== GRU MENU ===\n");
             printComu();
+            printf("\t3. Creacio de tasques\n");
             printf("\t0. Tancar Sessio"); 
             break;
         case MINION:
@@ -44,12 +44,12 @@ void printMenuMinion(UserType type){
         case MINION_ENG:
             printf("\n=== MINION ENGINYER MENU ===\n");
             printComu();
-            printf("\t4. Consultar llistat d'eines creades\n");
-            printf("\t5. Creacio d'una nova eina\n");
-            printf("\t6. Creacio d'una nova peca\n");
-            printf("\t7. Assignar peca a una eina\n");
-            printf("\t8. Consultar temps treballat\n");
-            printf("\t9. Consultar eines i peces dissenyades\n");
+            printf("\t3. Consultar llistat d'eines creades\n");
+            printf("\t4. Creacio d'una nova eina\n");
+            printf("\t5. Creacio d'una nova peca\n");
+            printf("\t6. Assignar peca a una eina\n");
+            printf("\t7. Consultar temps treballat\n");
+            printf("\t8. Consultar eines i peces dissenyades\n");
             printf("\t0. Tancar Sessio");    
             break;
         default:
@@ -75,7 +75,24 @@ int main() {
     pieces = malloc(MAX_PIECE * sizeof(piece));
 
     loadUsers(users, &numUsers);
-    printf("%s", users[0].user);
+
+    /*inicio un MIN_ENGINYER ja que no hi ha cap forma de crear-lo sino perque els MINIONS no 
+    evolucionen en les funcionalitats comunes i, per tant, no podria provar les meves funcionalitats
+    Users hardcodejats
+
+    GRU: nom(gru) contrasenya(gru123) pin(1111)
+    MINION: nom(min) contrasenya(min123) pin(2222)
+    SUPERMINION: nom(sMin) contrasenya(sMin123) pin(3333)
+    MINION_ENG: nom(minE) contrasenya(minE123) pin(4444)
+
+    */
+    
+    if(numUsers < 4){
+        initUsers(users, &numUsers); 
+        saveUsers(users, numUsers);
+    }
+             
+    
     while (opcio != 3) {
         if(loggedUser == NONE){
             printMenuPrincipal();
@@ -105,6 +122,7 @@ int main() {
                     }
                     break;
                 case 3:
+                    free(users);
                     printf("GoodBye!\n");
                     break;
                 default:
@@ -117,65 +135,138 @@ int main() {
             loadTasques(tasques, &numTasques);
             loadPieces(pieces, &numPieces);
 
+            if(numPieces < 2){
+                initPieces(pieces, &numPieces);
+                savePieces(pieces, numPieces);
+            }  
+
+            if(numEines < 2){
+                initEines(eines, &numEines, pieces, numPieces);
+                saveEines(eines, numEines);
+            }
+
             while(opcioLogged != 0){
                 printMenuMinion(loggedUser);
                 printf("\n\nOption to choose: ");
                 opcioLogged = leerInt(); 
 
-                if(loggedUser != MINION_ENG){
-                    if(opcioLogged < 0 || opcioLogged > 3){
-                        opcioLogged = -1;
-                        printf("Wrong Option (0-3)");
-                    }
-                }
-
-                switch (opcioLogged) {
-                    case 0:
-                        printf("Tancant sessio...\n");
-                        loggedUser = NONE;
-                        break;
-                    case 1:
-                        mostrarEinesACrear(eines, numEines);
-                        break;
-                    case 2:
-                        mostrarTasquesPendents(tasques, numTasques);
-                        break;
-                    case 3:
-                        crearNovaTasca(tasques, &numTasques, users, numUsers);
-                        saveTasques(tasques, numTasques);
-                        break;
-                    case 4:
-                        mostrarEinesCreades(eines, numEines);
-                        break;
-                    case 5:
-                        if(numPieces > 0){
-                            crearNovaEina(eines, &numEines, users, userPosition, pieces, numPieces);
-                            saveEines(eines, numEines);
-                        } else {
-                            printf("There are no pieces to build a new tool.");
+                switch(loggedUser) {                        
+                    case MINION:
+                        switch(opcioLogged) {
+                            case 0:
+                                free(eines);
+                                free(pieces);
+                                free(tasques);
+                                loggedUser = NONE;
+                                break;
+                            case 1:
+                                mostrarEinesACrear(eines, numEines);
+                                break;
+                            case 2:
+                                mostrarTasquesPendents(tasques, numTasques);
+                                break;
+                            default:
+                                printf("Wrong Option (0-2)\n");
+                                break;
                         }
                         break;
-                    case 6:
-                        createNewPiece(pieces, &numPieces, users[userPosition].user);
-                        savePieces(pieces, numPieces);
+
+                    case SUPERMINION:
+                        switch(opcioLogged) {
+                            case 0:
+                                free(eines);
+                                free(pieces);
+                                free(tasques);
+                                loggedUser = NONE;
+                                break;
+                            case 1:
+                                mostrarEinesACrear(eines, numEines);
+                                break;
+                            case 2:
+                                mostrarTasquesPendents(tasques, numTasques);
+                                break;
+                            default:
+                                printf("Wrong Option (0-2)\n");
+                                break;
+                        }
                         break;
-                    case 7:
-                        afegirPiece(pieces, numPieces, eines, numEines);
+                    
+                    case GRU:  
+                        switch (opcioLogged) {
+                            case CAS_IMPOSSIBLE:
+                                break;
+                            case 0:
+                                free(eines);
+                                free(pieces);
+                                free(tasques);
+                                loggedUser = NONE;
+                                break;
+                            case 1:
+                                mostrarEinesACrear(eines, numEines);
+                                break;
+                            case 2:
+                                mostrarTasquesPendents(tasques, numTasques);
+                                break;
+                            case 3:
+                                crearNovaTasca(tasques, &numTasques, users, numUsers);
+                                saveTasques(tasques, numTasques);
+                                break;
+                            default:
+                                printf("Wrong Option (0-3)\n");
+                                break;
+                        }
                         break;
-                    case 8:
-                        mostrarTempsTreballat(pieces, numPieces, eines, numEines, users[userPosition].user);
+                    case MINION_ENG:
+                        switch (opcioLogged) {
+                            case 0:
+                                free(eines);
+                                free(pieces);
+                                free(tasques);
+                                loggedUser = NONE;
+                                break;
+                            case 1:
+                                mostrarEinesACrear(eines, numEines);
+                                break;
+                            case 2:
+                                mostrarTasquesPendents(tasques, numTasques);
+                                break;
+                            case 3:
+                                mostrarEinesCreades(eines, numEines);
+                                break;
+                            case 4:
+                                if(numPieces > 0){
+                                    crearNovaEina(eines, &numEines, users, userPosition, pieces, numPieces);
+                                    saveEines(eines, numEines);
+                                } else {
+                                    printf("There are no pieces to build a new tool.");
+                                }
+                                break;
+                            case 5:
+                                createNewPiece(pieces, &numPieces, users[userPosition].user);
+                                savePieces(pieces, numPieces);
+                                break;
+                            case 6:
+                                afegirPiece(pieces, numPieces, eines, numEines);
+                                break;
+                            case 7:
+                                mostrarTempsTreballat(pieces, numPieces, eines, numEines, users[userPosition].user);
+                                break;
+                            case 8:
+                                consultarPieceEinesDissenyades(pieces, numPieces, eines, numEines, users[userPosition].user, users, numUsers);
+                                saveUsers(users, numUsers);
+                                break;
+                            default:
+                                printf("Wrong Option (0-8)");
+                                break;
+                        }
                         break;
-                    case 9:
-                        consultarPieceEinesDissenyades(pieces, numPieces, eines, numEines, users[userPosition].user, users, numUsers);
-                        saveUsers(users, numUsers);
+                    case NONE:
+                        printf("Loggin Out...\n");
                         break;
-                    default:
-                        printf("Wrong Option (0-9)");
-                        break;
+
                 }
             }
         }
     }
-
     return 0;
 }

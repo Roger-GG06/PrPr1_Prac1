@@ -108,6 +108,35 @@ void saveEines(eina *eines, int numEines) {
     fclose(fp);
 }
 
+void initEines(eina *eines, int *numEines, piece *pieces, int numPieces) {
+    if (numPieces >= 2) {
+        strcpy(eines[0].nom, "Electric Drill");
+        strcpy(eines[0].creador, "minE");
+        strcpy(eines[0].type, "Power Tool");
+        strcpy(eines[0].descripcio, "High power electric drill for industrial use");
+        eines[0].quantity = 1;
+        eines[0].creacio = ACABAT;
+        eines[0].temps = 180;
+        eines[0].numPieces = 2;
+        strcpy(eines[0].pieces[0], pieces[0].nom);
+        strcpy(eines[0].pieces[1], pieces[1].nom); 
+        
+        strcpy(eines[1].nom, "Gearbox");
+        strcpy(eines[1].creador, "minE");
+        strcpy(eines[1].type, "Transmission");
+        strcpy(eines[1].descripcio, "Industrial gearbox for heavy machinery");
+        eines[1].quantity = 1;
+        eines[1].creacio = PENDENT;
+        eines[1].temps = 0;
+        eines[1].numPieces = 1;
+        strcpy(eines[1].pieces[0], pieces[1].nom);
+        
+        *numEines = 2;
+        saveEines(eines, *numEines);
+        printf("Initial tools created successfully.\n");
+    }
+}
+
 void mostrarEinesACrear(eina *eines, int numEines) {
     int einesMostrades = 0;
     if (numEines == 0) {
@@ -206,14 +235,22 @@ void crearNovaEina(eina *eines, int *numEines, user *usuaris, int posicioUsuari,
     int end = 0;
 
     printf("What is the name of the new tool? ");
-    leerString(name);
+    if(leerString(name)){
+        printf("Name can't be void\n");
+        return;
+    } 
 
     printf("What type of tool it is? ");
-    leerString(type);
+    if(leerString(type)){
+        printf("Type can't be void\n");
+        return;
+    } 
 
     printf("Make a brief description of the tool: ");
-    leerString(description);
-
+    if(leerString(description)){
+        printf("Description can't be void\n");
+        return;
+    } 
     while(!end){
         showPieces(pieces, numPieces);
         printf("0) No more pieces.\n\n");

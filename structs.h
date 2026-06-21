@@ -1,6 +1,9 @@
 #ifndef STRUCTS_H
 #define STRUCTS_H
 
+#include "utils.h"
+
+#define CAS_IMPOSSIBLE -100000000
 #define MAX_STR 100
 #define MAX_LENGTH 1000
 #define MAX_USERS 250
@@ -34,6 +37,7 @@ typedef struct{
     char password[MAX_STR];
     int pin;
     UserType type;
+    char fruit[MAX_STR];
 } user;
 
 //Cambiar todo otra puta vez
@@ -60,7 +64,7 @@ typedef struct{
     State pendent;
     char nom[MAX_STR];
     char usuari[MAX_STR];
-    char hora[MAX_STR];
+    DateTime hora;
     int durada;
     char descripcio[MAX_LENGTH];
 } task;

@@ -1,1 +1,2 @@
-Super Hammer;Roger;Manual;To super hammer things;1;ACABAT;120;2;Hammer;Glue
+Electric Drill;minE;Power Tool;High power electric drill for industrial use;1;ACABAT;180;2;Motor;Gear
+Gearbox;minE;Transmission;Industrial gearbox for heavy machinery;1;PENDENT;0;1;Gear
